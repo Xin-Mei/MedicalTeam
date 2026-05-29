@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金鶯診所 - 醫師個人班表</title>
+<style>
+:root{
+  color-scheme: light;
+  --teal:#2f9183; --teal-dark:#237468; --green:#3c6e58; --gold:#b3925f;
+  --ink:#3a4a44; --muted:#8a9690; --card:#fff; --line:#ece3d2; --chip:#f6efe4;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);min-height:100vh;
+  background:radial-gradient(1200px 380px at 15% -8%,#e7f0e8 0%,rgba(231,240,232,0) 60%),
+    radial-gradient(1200px 380px at 100% -5%,#eef2e6 0%,rgba(238,242,230,0) 55%),
+    linear-gradient(180deg,#fbf7ee 0%,#f7f2e7 100%);background-attachment:fixed;}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 18px 50px;}
+
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.brand .logo-img{height:58px;width:auto;display:block;}
+.brand-fallback{display:flex;align-items:center;gap:13px;}
+.logo-fallback{width:50px;height:50px;border-radius:50%;flex:none;display:flex;
+  background:radial-gradient(circle at 35% 30%,#4bb6a4,var(--teal-dark));align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(47,145,131,.3);}
+.logo-fallback svg{width:28px;height:28px;}
+.brand .txt .name{font-size:20px;font-weight:700;color:var(--green);letter-spacing:1px;line-height:1.15;}
+.brand .txt .org{font-size:12px;color:var(--gold);letter-spacing:2px;margin-top:3px;}
+.brand .admin-link{margin-left:auto;font-size:13px;color:var(--muted);background:none;border:1px solid var(--line);
+  border-radius:999px;padding:6px 14px;cursor:pointer;}
+.brand .admin-link:hover{color:var(--teal-dark);border-color:var(--teal);}
+
+.hero{text-align:center;margin:8px 0 22px;}
+.hero .eyebrow{font-size:12px;letter-spacing:6px;color:var(--gold);font-weight:600;}
+.hero h1{margin:8px 0 0;font-size:30px;color:var(--green);letter-spacing:4px;font-weight:700;}
+.hero .divider{width:56px;height:3px;background:var(--teal);border-radius:2px;margin:14px auto 12px;}
+.hero p{margin:0;color:var(--muted);font-size:13.5px;}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  box-shadow:0 8px 26px rgba(120,100,60,.07);padding:15px 18px;margin-bottom:14px;}
+.panel-row{display:flex;align-items:flex-start;gap:14px;}
+.panel-label{flex:none;display:inline-flex;align-items:center;gap:6px;background:var(--chip);
+  color:var(--gold);font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;margin-top:2px;}
+.capsules{display:flex;flex-wrap:wrap;gap:9px;flex:1;}
+.capsule{border:1px solid #ddd2bd;background:#fff;color:#5b6862;border-radius:999px;
+  padding:8px 16px;font-size:14px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.capsule:hover{border-color:var(--teal);color:var(--teal-dark);}
+.capsule.active{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(47,145,131,.28);}
+.capsule.all.active{background:var(--green);border-color:var(--green);}
+
+.syncbar{display:flex;align-items:center;gap:10px;margin:0 4px 20px;font-size:12.5px;color:var(--muted);}
+.resync{background:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--teal-dark);cursor:pointer;}
+.resync:hover{border-color:var(--teal);}
+
+.clinic-box{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  box-shadow:0 6px 18px rgba(120,100,60,.06);padding:18px 18px 20px;margin-bottom:18px;}
+.clinic-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.clinic-dot{width:10px;height:10px;border-radius:50%;background:var(--teal);flex:none;}
+.clinic-title{font-size:18px;font-weight:700;color:var(--green);}
+.clinic-count{font-size:12px;color:var(--muted);background:#eef5f2;border-radius:999px;padding:2px 10px;}
+.doc-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.doc-btn{border:1.5px solid var(--teal);background:#fff;color:var(--teal-dark);border-radius:999px;
+  padding:9px 18px;font-size:15px;cursor:pointer;transition:all .15s;font-weight:600;}
+.doc-btn:hover{background:var(--teal);color:#fff;box-shadow:0 5px 14px rgba(47,145,131,.28);transform:translateY(-1px);}
+.doc-btn.unset{border-style:dashed;border-color:#cdd4cf;color:#9aa49d;background:#fafaf7;}
+
+.footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:30px;line-height:1.9;}
+.footer .ft-title{color:var(--green);font-weight:700;font-size:13.5px;margin-bottom:4px;}
+.footer a{color:var(--teal-dark);}
+
+/* ===== admin ===== */
+.overlay{position:fixed;inset:0;background:rgba(40,55,50,.55);display:none;align-items:flex-start;
+  justify-content:center;padding:24px 12px;overflow-y:auto;z-index:60;}
+.overlay.show{display:flex;}
+.admin{background:#fff;border-radius:18px;max-width:860px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.32);overflow:hidden;}
+.admin-head{display:flex;align-items:center;gap:12px;padding:18px 20px;background:linear-gradient(180deg,#f3f8f4,#fff);border-bottom:1px solid var(--line);}
+.admin-head h2{margin:0;font-size:19px;color:var(--green);}
+.admin-head .x{margin-left:auto;background:#f1efe7;border:none;border-radius:9px;width:34px;height:34px;font-size:19px;cursor:pointer;color:#6b7770;}
+.admin-body{padding:18px 20px;max-height:72vh;overflow-y:auto;}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.btn{border:none;border-radius:10px;padding:9px 16px;font-size:14px;cursor:pointer;font-weight:600;}
+.btn.primary{background:var(--teal);color:#fff;}
+.btn.primary:hover{background:var(--teal-dark);}
+.btn.ghost{background:#f1efe7;color:#5b6862;}
+.btn.ghost:hover{background:#e6e2d6;}
+.hint{font-size:12px;color:var(--muted);margin:-4px 0 14px;line-height:1.6;}
+.adm-clinic{border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.adm-clinic>summary{cursor:pointer;padding:11px 14px;background:#f7f4ec;font-weight:700;color:var(--green);list-style:none;display:flex;align-items:center;gap:8px;}
+.adm-clinic>summary::-webkit-details-marker{display:none;}
+.adm-clinic>summary .cnt{font-size:12px;color:var(--muted);font-weight:500;}
+.adm-rows{padding:12px 14px;}
+.adm-src{display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:12px;color:var(--muted);}
+.adm-src input{flex:1;border:1px solid #e4dcc9;border-radius:8px;padding:6px 9px;font-size:12px;font-family:inherit;color:#7a857f;}
+.adm-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.adm-row input{flex:1;border:1px solid #d9d0bd;border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;}
+.adm-row input.name{flex:0 0 150px;}
+.adm-row .del{background:#fbeceb;color:#c0594f;border:none;border-radius:8px;width:32px;height:34px;cursor:pointer;font-size:16px;flex:none;}
+.adm-row .apply{background:#eef5f2;color:var(--teal-dark);border:none;border-radius:8px;padding:0 10px;height:34px;cursor:pointer;font-size:12px;flex:none;white-space:nowrap;}
+.adm-add{background:none;border:1px dashed #cdd4cf;color:var(--teal-dark);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;}
+.settings{border-top:1px solid var(--line);padding-top:14px;margin-top:6px;}
+.settings label{font-size:13px;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.settings input[type=text]{border:1px solid #d9d0bd;border-radius:8px;padding:7px 10px;font-size:14px;font-family:inherit;}
+.gate{padding:26px 20px;text-align:center;}
+.gate input{border:1px solid #d9d0bd;border-radius:10px;padding:10px 14px;font-size:15px;font-family:inherit;width:220px;text-align:center;}
+.gate p{color:var(--muted);font-size:13px;}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;
+  padding:11px 22px;border-radius:999px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;
+  transition:opacity .25s;z-index:80;pointer-events:none;}
+.toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img class="logo-img" id="logoImg" alt="金鶯診所 金鶯健康志業">
+    <div class="brand-fallback" id="logoFb" style="display:none">
+      <div class="logo-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-7 8-11a4 4 0 0 0-8-1 4 4 0 0 0-8 1c0 4 3 8 8 11z"/></svg></div>
+      <div class="txt"><div class="name">金鶯診所</div><div class="org">金鶯健康志業</div></div>
+    </div>
+    <button class="admin-link" id="openAdmin">⚙ 後台維護</button>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">DOCTOR SCHEDULE</div>
+    <h1>醫師個人班表</h1>
+    <div class="divider"></div>
+    <p>點選院區可篩選；點選醫師查看醫師個人簡介與班表</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-row">
+      <span class="panel-label">🏥 瀏覽</span>
+      <div class="capsules" id="capsules"></div>
+    </div>
+  </div>
+  <div class="syncbar">
+    <span id="syncStatus"></span>
+    <button class="resync" id="resyncBtn">🔄 重新同步官網名單</button>
+  </div>
+
+  <div id="content"></div>
+
+  <div class="footer">
+    <div class="ft-title">金鶯診所 · 全年無休</div>
+    <div>鶯歌／三樹／樹林／桃園／土城／八德／龍潭／大溪院區　7:30–21:30</div>
+    <div>大竹／大湳／平鎮／埔心／觀音院區　7:30–12:00、14:00–18:00、18:30–21:30</div>
+    <div>資料來源：<a href="https://www.drking.com.tw/" target="_blank" rel="noopener">drking.com.tw</a></div>
+  </div>
+</div>
+
+<div class="overlay" id="adminOverlay">
+  <div class="admin">
+    <div class="admin-head"><h2>⚙ 後台維護</h2><button class="x" id="closeAdmin">×</button></div>
+    <div id="gate" class="gate">
+      <p>請輸入管理密碼</p>
+      <input type="password" id="gatePass" placeholder="管理密碼"><br><br>
+      <button class="btn primary" id="gateBtn">進入後台</button>
+      <p style="margin-top:14px">預設密碼：<b>drking</b>（可於後台內變更）</p>
+    </div>
+    <div id="adminBody" class="admin-body" style="display:none"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   醫師名冊與導向連結（後台可維護，並可「匯出可上線網頁」）
+   - clinics[].src    : 該院區在官網的分頁網址（用於即時同步名單）
+   - clinics[].doctors[] : { name:"姓名", url:"點擊後前往的網址" }
+   url 留空 = 前台顯示為灰色未啟用按鈕
+   ========================================================= */
+const DEFAULT_CONFIG = /*CFG_START*/{
+  "adminPass": "drking",
+  "autoSync": true,
+  "proxy": "https://api.allorigins.win/raw?url=",
+  "clinics": [
+    {
+      "name": "鶯歌院區",
+      "src": "https://www.drking.com.tw/products-2.html",
+      "doctors": [
+        {
+          "name": "林永昌院長",
+          "url": "https://www.drking.com.tw/product-8.html"
+        },
+        {
+          "name": "陳珠醫師",
+          "url": "https://www.drking.com.tw/product-7.html"
+        },
+        {
+          "name": "鍾偉瑋醫師",
+          "url": "https://www.drking.com.tw/product-6-2.html"
+        },
+        {
+          "name": "李軍逸醫師",
+          "url": "https://www.drking.com.tw/product-5-2.html"
+        },
+        {
+          "name": "陳郁凡醫師",
+          "url": "https://www.drking.com.tw/product-4-2.html"
+        },
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-2.html"
+        }
+      ]
+    },
+    {
+      "name": "三樹院區",
+      "src": "https://www.drking.com.tw/products-3.html",
+      "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-3.html"
+        },
+        {
+          "name": "總院長 黃錦崧執行長",
+          "url": "https://www.drking.com.tw/product-10-3.html"
+        },
+        {
+          "name": "減重名醫 蕭捷健醫師",
+          "url": "https://www.drking.com.tw/product-9-3.html"
+        },
+        {
+          "name": "張慧馨院長",
+          "url": "https://www.drking.com.tw/product-16.html"
+        },
+        {
+          "name": "陳富玫醫師",
+          "url": "https://www.drking.com.tw/product-15.html"
+        },
+        {
+          "name": "闕壯理醫師",
+          "url": "https://www.drking.com.tw/product-14.html"
+        },
+        {
+          "name": "黃允玫醫師",
+          "url": "https://www.drking.com.tw/product-13.html"
+        },
+        {
+          "name": "張覲麟醫師",
+          "url": "https://www.drking.com.tw/product-12.html"
+        },
+        {
+          "name": "林昆澤醫師",
+          "url": "https://www.drking.com.tw/product-37.html"
+        },
+        {
+          "name": "李軍逸醫師",
+          "url": "https://www.drking.com.tw/product-5-3.html"
+        },
+        {
+          "name": "陳郁凡醫師",
+          "url": "https://www.drking.com.tw/product-4-3.html"
+        }
+      ]
+    },
+    {
+      "name": "樹林院區",
+      "src": "https://www.drking.com.tw/products-4.html",
+      "doctors": [
+        {
+          "name": "林秉承院長",
+          "url": "https://www.drking.com.tw/product-21-4.html"
+        },
+        {
+          "name": "廖崇淵醫師",
+          "url": "https://www.drking.com.tw/product-20-4.html"
+        },
+        {
+          "name": "尤騰醫師",
+          "url": "https://www.drking.com.tw/product-19-4.html"
+        },
+        {
+          "name": "何中誠醫師",
+          "url": "https://www.drking.com.tw/product-18-4.html"
+        },
+        {
+          "name": "陳永仁醫師",
+          "url": "https://www.drking.com.tw/product-17-4.html"
+        },
+        {
+          "name": "李軍逸醫師",
+          "url": "https://www.drking.com.tw/product-5-4.html"
+        },
+        {
+          "name": "黃炯達院長",
+          "url": "https://www.drking.com.tw/product-67.html"
+        }
+      ]
+    },
+    {
+      "name": "桃園院區",
+      "src": "https://www.drking.com.tw/products-5.html",
+      "doctors": [
+        {
+          "name": "減重名醫 蕭捷健醫師",
+          "url": "https://www.drking.com.tw/product-9-5.html"
+        },
+        {
+          "name": "蕭宇伯醫師",
+          "url": "https://www.drking.com.tw/product-25.html"
+        },
+        {
+          "name": "李豪權醫師",
+          "url": "https://www.drking.com.tw/product-24.html"
+        },
+        {
+          "name": "陳韋思醫師",
+          "url": "https://www.drking.com.tw/product-23.html"
+        },
+        {
+          "name": "曾㨗聖醫師",
+          "url": "https://www.drking.com.tw/product-22.html"
+        },
+        {
+          "name": "鍾偉瑋醫師",
+          "url": "https://www.drking.com.tw/product-6-5.html"
+        },
+        {
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-76.html"
+        }
+      ]
+    },
+    {
+      "name": "土城院區",
+      "src": "https://www.drking.com.tw/products-6.html",
+      "doctors": [
+        {
+          "name": "減重名醫 蕭捷健醫師",
+          "url": "https://www.drking.com.tw/product-9-6.html"
+        },
+        {
+          "name": "張簡千郁院長",
+          "url": "https://www.drking.com.tw/product-28.html"
+        },
+        {
+          "name": "陳麒中醫師",
+          "url": "https://www.drking.com.tw/product-27.html"
+        },
+        {
+          "name": "黃濰醫師",
+          "url": "https://www.drking.com.tw/product-56.html"
+        },
+        {
+          "name": "何金蔚醫師",
+          "url": "https://www.drking.com.tw/product-26.html"
+        },
+        {
+          "name": "林秉承院長",
+          "url": "https://www.drking.com.tw/product-21-6.html"
+        },
+        {
+          "name": "廖崇淵醫師",
+          "url": "https://www.drking.com.tw/product-20-6.html"
+        },
+        {
+          "name": "尤騰醫師",
+          "url": "https://www.drking.com.tw/product-19-6.html"
+        },
+        {
+          "name": "何中誠醫師",
+          "url": "https://www.drking.com.tw/product-18-6.html"
+        },
+        {
+          "name": "陳永仁醫師",
+          "url": "https://www.drking.com.tw/product-17-6.html"
+        }
+      ]
+    },
+    {
+      "name": "八德院區",
+      "src": "https://www.drking.com.tw/products-7.html",
+      "doctors": [
+        {
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-31.html"
+        },
+        {
+          "name": "李彥輝醫師",
+          "url": "https://www.drking.com.tw/product-30-7.html"
+        },
+        {
+          "name": "楊大緯醫師",
+          "url": "https://www.drking.com.tw/product-60.html"
+        },
+        {
+          "name": "王志冉醫師",
+          "url": "https://www.drking.com.tw/product-63.html"
+        },
+        {
+          "name": "曾韋綸醫師",
+          "url": "https://www.drking.com.tw/product-72.html"
+        },
+        {
+          "name": "黃炯達院長",
+          "url": "https://www.drking.com.tw/product-66.html"
+        }
+      ]
+    },
+    {
+      "name": "龍潭院區",
+      "src": "https://www.drking.com.tw/products-8.html",
+      "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-8.html"
+        },
+        {
+          "name": "何冠達院長",
+          "url": "https://www.drking.com.tw/product-35.html"
+        },
+        {
+          "name": "何中庸醫師",
+          "url": "https://www.drking.com.tw/product-33.html"
+        },
+        {
+          "name": "華志倫醫師",
+          "url": "https://www.drking.com.tw/product-32.html"
+        },
+        {
+          "name": "林昱仁醫師",
+          "url": "https://www.drking.com.tw/product-51.html"
+        },
+        {
+          "name": "陳昭銘院長",
+          "url": "https://www.drking.com.tw/product-34.html"
+        }
+      ]
+    },
+    {
+      "name": "大溪院區",
+      "src": "https://www.drking.com.tw/products-9.html",
+      "doctors": [
+        {
+          "name": "林鼎盛院長",
+          "url": "https://www.drking.com.tw/product-39.html"
+        },
+        {
+          "name": "林昆澤醫師",
+          "url": "https://www.drking.com.tw/product-79.html"
+        },
+        {
+          "name": "巫清隆醫師",
+          "url": "https://www.drking.com.tw/product-71.html"
+        },
+        {
+          "name": "呂瑩純醫師",
+          "url": "https://www.drking.com.tw/product-70.html"
+        },
+        {
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-74.html"
+        },
+        {
+          "name": "李逸瑋院長",
+          "url": "https://www.drking.com.tw/product-78.html"
+        }
+      ]
+    },
+    {
+      "name": "大竹院區",
+      "src": "https://www.drking.com.tw/products-10.html",
+      "doctors": [
+        {
+          "name": "陳秉峰院長",
+          "url": "https://www.drking.com.tw/product-41.html"
+        },
+        {
+          "name": "沈士強醫師",
+          "url": "https://www.drking.com.tw/product-40.html"
+        },
+        {
+          "name": "彭榆真醫師",
+          "url": "https://www.drking.com.tw/product-55.html"
+        },
+        {
+          "name": "李軍逸醫師",
+          "url": "https://www.drking.com.tw/product-5-10.html"
+        }
+      ]
+    },
+    {
+      "name": "大湳院區",
+      "src": "https://www.drking.com.tw/products-11.html",
+      "doctors": [
+        {
+          "name": "黃炯達院長",
+          "url": "https://www.drking.com.tw/product-65.html"
+        },
+        {
+          "name": "洪岱熙醫師",
+          "url": "https://www.drking.com.tw/product-59.html"
+        },
+        {
+          "name": "鍾偉瑋醫師",
+          "url": "https://www.drking.com.tw/product-6-11.html"
+        },
+        {
+          "name": "李彥輝醫師",
+          "url": "https://www.drking.com.tw/product-30-11.html"
+        },
+        {
+          "name": "陳永仁醫師",
+          "url": "https://www.drking.com.tw/product-17-11.html"
+        }
+      ]
+    },
+    {
+      "name": "平鎮院區",
+      "src": "https://www.drking.com.tw/products-12.html",
+      "doctors": [
+        {
+          "name": "減重名醫 蕭捷健醫師",
+          "url": "https://www.drking.com.tw/product-9-12.html"
+        },
+        {
+          "name": "陳昭銘院長",
+          "url": "https://www.drking.com.tw/product-68.html"
+        },
+        {
+          "name": "甘家銘醫師",
+          "url": "https://www.drking.com.tw/product-57.html"
+        },
+        {
+          "name": "何冠達院長",
+          "url": "https://www.drking.com.tw/product-64.html"
+        }
+      ]
+    },
+    {
+      "name": "埔心院區",
+      "src": "https://www.drking.com.tw/products-13.html",
+      "doctors": [
+        {
+          "name": "梁培毅院長",
+          "url": "https://www.drking.com.tw/product-29.html"
+        },
+        {
+          "name": "黃炯達院長",
+          "url": "https://www.drking.com.tw/product-42.html"
+        },
+        {
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-75.html"
+        },
+        {
+          "name": "陳昭銘院長",
+          "url": "https://www.drking.com.tw/product-69.html"
+        }
+      ]
+    },
+    {
+      "name": "觀音院區",
+      "src": "https://www.drking.com.tw/products-14.html",
+      "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-14.html"
+        },
+        {
+          "name": "總院長 黃錦崧執行長",
+          "url": "https://www.drking.com.tw/product-10-14.html"
+        },
+        {
+          "name": "李逸瑋院長",
+          "url": "https://www.drking.com.tw/product-38.html"
+        },
+        {
+          "name": "林鼎盛院長",
+          "url": "https://www.drking.com.tw/product-77.html"
+        },
+        {
+          "name": "侯進坤醫師",
+          "url": "https://www.drking.com.tw/product-73.html"
+        }
+      ]
+    }
+  ]
+}/*CFG_END*/;
+
+const LS_KEY = "drking_team_config_v3";
+let CONFIG = loadConfig();
+let current = "all"; // "all"=全院區醫師，或院區索引
+
+function loadConfig(){
+  try{ const s=localStorage.getItem(LS_KEY); if(s){ const c=JSON.parse(s); if(c&&c.clinics) return c; } }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+}
+function saveDraft(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(CONFIG)); }catch(e){} }
+
+/* ---------- 前台 ---------- */
+function renderCapsules(){
+  const box=document.getElementById("capsules"); box.innerHTML="";
+  const all=document.createElement("button");
+  all.className="capsule all"+(current==="all"?" active":"");
+  all.textContent="全院區醫師";
+  all.onclick=()=>{ current="all"; renderFront(); };
+  box.appendChild(all);
+  CONFIG.clinics.forEach((c,i)=>{
+    const b=document.createElement("button");
+    b.className="capsule"+(String(current)===String(i)?" active":"");
+    b.textContent=c.name; b.dataset.idx=i;
+    b.onclick=()=>{ current=i; renderFront(); };
+    box.appendChild(b);
+  });
+}
+function openDoctor(d){
+  const u=(d.url||"").trim();
+  if(!u){ toast("此醫師尚未設定連結"); return; }
+  window.open(u, "_blank", "noopener");
+}
+function clinicBox(c){
+  const box=document.createElement("div"); box.className="clinic-box";
+  const head=document.createElement("div"); head.className="clinic-head";
+  head.innerHTML='<span class="clinic-dot"></span><span class="clinic-title">'+escHtml(c.name)+'</span><span class="clinic-count">'+c.doctors.length+' 位</span>';
+  box.appendChild(head);
+  const grid=document.createElement("div"); grid.className="doc-grid";
+  c.doctors.forEach(d=>{
+    const btn=document.createElement("button");
+    btn.className="doc-btn"+((d.url&&d.url.trim())?"":" unset");
+    btn.textContent=d.name;
+    btn.onclick=()=>openDoctor(d);
+    grid.appendChild(btn);
+  });
+  box.appendChild(grid);
+  return box;
+}
+function renderContent(){
+  const wrap=document.getElementById("content"); wrap.innerHTML="";
+  const list=current==="all"?CONFIG.clinics:[CONFIG.clinics[current]];
+  list.forEach(c=>{ if(c) wrap.appendChild(clinicBox(c)); });
+}
+function renderFront(){ renderCapsules(); renderContent(); }
+
+/* ---------- 即時同步官網名單 ---------- */
+function setSyncStatus(state, extra){
+  const el=document.getElementById("syncStatus");
+  if(state==="syncing") el.textContent="🔄 正在同步官網最新名單…";
+  else if(state==="ok") el.textContent="✓ 已同步官網最新名單"+(extra?("（"+extra+"）"):"");
+  else if(state==="fail") el.textContent="⚠ 暫時無法連線官網，顯示內建名單";
+  else el.textContent="";
+}
+function proxify(url){
+  const p=CONFIG.proxy||"https://api.allorigins.win/raw?url=";
+  return p+encodeURIComponent(url);
+}
+async function fetchHTML(url){
+  const r=await fetch(proxify(url), {cache:"no-store"});
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  return await r.text();
+}
+function parseDoctorsFromHTML(html){
+  const doc=new DOMParser().parseFromString(html,"text/html");
+  const order=[]; const map=new Map();
+  doc.querySelectorAll("a[href]").forEach(a=>{
+    const href=a.getAttribute("href")||"";
+    if(/products-/.test(href)) return;               // 排除院區選單(複數 products-)
+    const m=href.match(/product-(\d+(?:-\d+)?)\.html/); // 醫師個人頁(單數 product-)
+    if(!m) return;
+    const abs="https://www.drking.com.tw/product-"+m[1]+".html";
+    let txt=(a.textContent||"").replace(/\s+/g,"");
+    if(!map.has(abs)){ map.set(abs,""); order.push(abs); }
+    if(txt && txt.toLowerCase()!=="more" && /[一-鿿]/.test(txt)) map.set(abs, txt);
+  });
+  const out=[];
+  order.forEach(href=>{ const name=map.get(href); if(name) out.push({name, url:href}); });
+  return out;
+}
+function mergeClinic(c, live){
+  const byName=new Map((c.doctors||[]).map(d=>[d.name, d]));
+  c.doctors = live.map(ld=>{
+    const ex=byName.get(ld.name);
+    if(ex){ if(!ex.url) ex.url=ld.url; return ex; } // 保留後台設定的連結
+    return {name:ld.name, url:ld.url};               // 新醫師：預設連到官網個人頁
+  });
+}
+let syncing=false;
+async function liveSync(manual){
+  if(syncing) return;
+  if(!manual && CONFIG.autoSync===false) { setSyncStatus("idle"); return; }
+  syncing=true; setSyncStatus("syncing");
+  let ok=0, fail=0;
+  for(const c of CONFIG.clinics){
+    if(!c.src) continue;
+    try{
+      const docs=parseDoctorsFromHTML(await fetchHTML(c.src));
+      if(docs.length){ mergeClinic(c, docs); ok++; }
+      else fail++;
+    }catch(e){ fail++; }
+  }
+  syncing=false;
+  if(ok){ saveDraft(); renderFront(); setSyncStatus("ok", new Date().toLocaleString("zh-TW",{hour12:false})); }
+  else setSyncStatus("fail");
+}
+function mergeFromClinics(list){
+  list.forEach(jc=>{
+    if(!jc || !jc.doctors) return;
+    let c=CONFIG.clinics.find(x=>x.name===jc.name);
+    if(!c){ c={name:jc.name, src:jc.src||"", doctors:[]}; CONFIG.clinics.push(c); }
+    mergeClinic(c, jc.doctors);
+  });
+}
+/* 同步：優先讀同源 doctors.json（由 GitHub Action 定時產生，最穩定），失敗再退回中繼即時抓 */
+async function syncFromData(manual){
+  if(!manual && CONFIG.autoSync===false){ setSyncStatus("idle"); return; }
+  setSyncStatus("syncing");
+  try{
+    const r=await fetch((CONFIG.dataUrl||"doctors.json")+"?t="+Date.now(), {cache:"no-store"});
+    if(r.ok){
+      const data=await r.json();
+      if(data && Array.isArray(data.clinics) && data.clinics.length){
+        mergeFromClinics(data.clinics); saveDraft(); renderFront();
+        const when=data.generatedAt?new Date(data.generatedAt).toLocaleString("zh-TW",{hour12:false}):new Date().toLocaleString("zh-TW",{hour12:false});
+        setSyncStatus("ok", when); return;
+      }
+    }
+  }catch(e){}
+  // 沒有 doctors.json（或讀取失敗）→ 退回中繼即時抓
+  await liveSync(manual);
+}
+document.getElementById("resyncBtn").onclick=()=>syncFromData(true);
+
+/* ---------- 後台 ---------- */
+const overlay=document.getElementById("adminOverlay");
+document.getElementById("openAdmin").onclick=()=>{
+  overlay.classList.add("show");
+  document.getElementById("gate").style.display="block";
+  document.getElementById("adminBody").style.display="none";
+  document.getElementById("gatePass").value="";
+  setTimeout(()=>document.getElementById("gatePass").focus(),50);
+};
+document.getElementById("closeAdmin").onclick=()=>overlay.classList.remove("show");
+overlay.onclick=e=>{ if(e.target.id==="adminOverlay") overlay.classList.remove("show"); };
+document.getElementById("gateBtn").onclick=tryEnter;
+document.getElementById("gatePass").onkeydown=e=>{ if(e.key==="Enter") tryEnter(); };
+function tryEnter(){
+  if(document.getElementById("gatePass").value===(CONFIG.adminPass||"drking")){
+    document.getElementById("gate").style.display="none";
+    document.getElementById("adminBody").style.display="block";
+    renderAdmin();
+  }else toast("密碼錯誤");
+}
+function renderAdmin(){
+  const body=document.getElementById("adminBody");
+  body.innerHTML=
+    '<div class="toolbar">'+
+      '<button class="btn primary" id="exportBtn">💾 匯出可上線網頁</button>'+
+      '<button class="btn ghost" id="resync2">🔄 立即同步官網名單</button>'+
+      '<button class="btn ghost" id="exportJson">下載設定 (JSON)</button>'+
+      '<button class="btn ghost" id="importJson">匯入設定</button>'+
+      '<button class="btn ghost" id="resetBtn">還原預設名冊</button>'+
+    '</div>'+
+    '<div class="hint">每位醫師填「點擊後前往的網址」（已預填官網個人頁，可改成任何連結）。'+
+      '名單會在開啟頁面時自動向官網同步（新增/異動醫師會自動帶入）。'+
+      '改完按「💾 匯出可上線網頁」下載新 HTML 上傳取代，所有人即可看到。</div>'+
+    '<div id="admClinics"></div>'+
+    '<div class="settings">'+
+      '<label>🔑 管理密碼：<input type="text" id="setPass" value="'+escAttr(CONFIG.adminPass||"drking")+'"></label>'+
+      '<label><input type="checkbox" id="setAuto" '+(CONFIG.autoSync!==false?"checked":"")+'> 開啟頁面時自動同步官網名單</label>'+
+      '<label>🔁 同步中繼網址：<input type="text" id="setProxy" style="flex:1;min-width:260px" value="'+escAttr(CONFIG.proxy||"https://api.allorigins.win/raw?url=")+'"></label>'+
+      '<button class="adm-add" id="addClinic">＋ 新增院區</button>'+
+    '</div>';
+  const cw=body.querySelector("#admClinics");
+  CONFIG.clinics.forEach((c,ci)=>{
+    const det=document.createElement("details"); det.className="adm-clinic";
+    const sum=document.createElement("summary");
+    sum.innerHTML='▸ '+escHtml(c.name)+' <span class="cnt">（'+c.doctors.length+' 位）</span>';
+    det.appendChild(sum);
+    const rows=document.createElement("div"); rows.className="adm-rows";
+
+    const cnRow=document.createElement("div"); cnRow.className="adm-row";
+    cnRow.innerHTML='<input class="name" value="'+escAttr(c.name)+'" placeholder="院區名稱"><span style="font-size:12px;color:#8a9690">院區名稱</span><button class="del" title="刪除整個院區">🗑</button>';
+    cnRow.querySelector("input").oninput=e=>{ c.name=e.target.value; saveDraft(); };
+    cnRow.querySelector(".del").onclick=()=>{ if(confirm("確定刪除「"+c.name+"」整個院區？")){ CONFIG.clinics.splice(ci,1); saveDraft(); renderAdmin(); renderFront(); } };
+    rows.appendChild(cnRow);
+
+    const srcRow=document.createElement("div"); srcRow.className="adm-src";
+    srcRow.innerHTML='<span>官網分頁(同步用)</span><input value="'+escAttr(c.src||"")+'" placeholder="https://www.drking.com.tw/products-N.html">';
+    srcRow.querySelector("input").oninput=e=>{ c.src=e.target.value; saveDraft(); };
+    rows.appendChild(srcRow);
+
+    c.doctors.forEach((d,di)=>{
+      const r=document.createElement("div"); r.className="adm-row";
+      r.innerHTML='<input class="name" value="'+escAttr(d.name)+'" placeholder="醫師姓名">'+
+        '<input value="'+escAttr(d.url)+'" placeholder="點擊後前往的網址 https://">'+
+        '<button class="apply" title="套用此連結到所有院區同名醫師">套用全院區</button>'+
+        '<button class="del" title="刪除此醫師">✕</button>';
+      const ins=r.querySelectorAll("input");
+      ins[0].oninput=e=>{ d.name=e.target.value; saveDraft(); };
+      ins[1].oninput=e=>{ d.url=e.target.value; saveDraft(); };
+      r.querySelector(".apply").onclick=()=>applyToSameName(d.name, ins[1].value);
+      r.querySelector(".del").onclick=()=>{ c.doctors.splice(di,1); saveDraft(); renderAdmin(); renderFront(); };
+      rows.appendChild(r);
+    });
+    const add=document.createElement("button"); add.className="adm-add"; add.textContent="＋ 新增醫師";
+    add.onclick=()=>{ c.doctors.push({name:"新醫師",url:""}); saveDraft(); renderAdmin(); renderFront(); };
+    rows.appendChild(add);
+    det.appendChild(rows); cw.appendChild(det);
+  });
+  body.querySelector("#setPass").oninput=e=>{ CONFIG.adminPass=e.target.value; saveDraft(); };
+  body.querySelector("#setAuto").onchange=e=>{ CONFIG.autoSync=e.target.checked; saveDraft(); };
+  body.querySelector("#setProxy").oninput=e=>{ CONFIG.proxy=e.target.value; saveDraft(); };
+  body.querySelector("#addClinic").onclick=()=>{ CONFIG.clinics.push({name:"新院區",src:"",doctors:[]}); saveDraft(); renderAdmin(); renderFront(); };
+  body.querySelector("#exportBtn").onclick=exportSite;
+  body.querySelector("#resync2").onclick=()=>{ toast("開始同步…"); syncFromData(true).then(()=>renderAdmin()); };
+  body.querySelector("#exportJson").onclick=exportJson;
+  body.querySelector("#importJson").onclick=importJson;
+  body.querySelector("#resetBtn").onclick=()=>{ if(confirm("還原為原始名冊？您填的連結將清除（建議先匯出備份）。")){ CONFIG=JSON.parse(JSON.stringify(DEFAULT_CONFIG)); saveDraft(); renderAdmin(); renderFront(); } };
+  renderFront();
+}
+function applyToSameName(name,url){
+  let n=0; CONFIG.clinics.forEach(c=>c.doctors.forEach(d=>{ if(d.name===name){ d.url=url; n++; } }));
+  saveDraft(); renderAdmin(); toast("已套用到 "+n+" 筆「"+name+"」");
+}
+
+/* ---------- 匯出 ---------- */
+function exportSite(){
+  document.getElementById("content").innerHTML="";
+  document.getElementById("adminBody").innerHTML="";
+  document.getElementById("capsules").innerHTML="";
+  let html="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+  const json=JSON.stringify(CONFIG,null,2);
+  html=html.replace(/\/\*CFG_START\*\/[\s\S]*?\/\*CFG_END\*\//,"/*CFG_START*/"+json+"/*CFG_END*/");
+  download(html,"doctor-schedule.html","text/html");
+  renderAdmin();
+  toast("已下載 doctor-schedule.html，請上傳取代線上檔案");
+}
+function exportJson(){ download(JSON.stringify(CONFIG,null,2),"config.json","application/json"); toast("已下載 config.json"); }
+function importJson(){
+  const inp=document.createElement("input"); inp.type="file"; inp.accept=".json,application/json";
+  inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
+    r.onload=()=>{ try{ const c=JSON.parse(r.result); if(!c.clinics) throw 0; CONFIG=c; saveDraft(); renderAdmin(); renderFront(); toast("已匯入設定"); }catch(e){ toast("檔案格式不正確"); } };
+    r.readAsText(f); };
+  inp.click();
+}
+function download(text,name,mime){
+  const blob=new Blob([text],{type:mime+";charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+
+/* ---------- utils ---------- */
+function escHtml(s){ return String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])); }
+function escAttr(s){ return String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m])); }
+let toastTimer;
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2200); }
+
+/* logo：優先用同目錄 logo.png，其次官網logo，最後內建徽記 */
+(function(){
+  const cands=["logo.png","https://www.drking.com.tw/uploads/use/20250731111412d249.jpg"];
+  const img=document.getElementById("logoImg"); let i=0;
+  function next(){ if(i>=cands.length){ img.style.display="none"; document.getElementById("logoFb").style.display="flex"; return; } img.src=cands[i++]; }
+  img.onerror=next; next();
+})();
+
+renderFront();
+syncFromData(false);
+</script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
