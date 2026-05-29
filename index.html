@@ -164,7 +164,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
     <div class="cap-scroll" id="capScroll" style="display: none;"><div class="cap-thumb" id="capThumb"></div></div>
   </div>
   <div class="syncbar">
-    <span id="syncStatus">⚠ 暫時無法連線官網，顯示內建名單</span>
+    <span id="syncStatus">✓ 已同步官網最新名單（2026/5/29 17:21:19）</span>
     <button class="resync" id="resyncBtn">🔄 重新同步官網名單</button>
   </div>
 
@@ -191,7 +191,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   </div>
 </div>
 
-<div class="toast" id="toast">密碼錯誤</div>
+<div class="toast" id="toast">開始同步…</div>
 
 <script>
 /* =========================================================
@@ -520,16 +520,16 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "url": "https://www.drking.com.tw/product-59.html"
         },
         {
-          "name": "廖崇淵醫師",
-          "url": "https://www.drking.com.tw/product-81.html"
-        },
-        {
           "name": "李彥輝醫師",
           "url": "https://www.drking.com.tw/product-30-11.html"
         },
         {
           "name": "陳永仁醫師",
           "url": "https://www.drking.com.tw/product-17-11.html"
+        },
+        {
+          "name": "廖崇淵醫師",
+          "url": "https://www.drking.com.tw/product-81.html"
         }
       ]
     },
@@ -568,7 +568,7 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "src": "https://www.drking.com.tw/products-13.html",
       "doctors": [
         {
-          "name": "總院長 黃錦崧執行長",
+          "name": "總院長黃錦崧執行長",
           "url": "https://www.drking.com.tw/product-10-13.html"
         },
         {
@@ -934,6 +934,7 @@ function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg
 renderFront();
 syncFromData(false);
 </script>
+
 
 
 </body></html>
