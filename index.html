@@ -18,7 +18,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
     linear-gradient(180deg,#fbf7ee 0%,#f7f2e7 100%);background-attachment:fixed;}
 .wrap{max-width:1040px;margin:0 auto;padding:20px 18px 50px;}
 
-.brand{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.brand{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px;position:relative;min-height:44px;}
 .brand .logo-img{height:58px;width:auto;display:block;}
 .brand-fallback{display:flex;align-items:center;gap:13px;}
 .logo-fallback{width:50px;height:50px;border-radius:50%;flex:none;display:flex;
@@ -26,11 +26,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 .logo-fallback svg{width:28px;height:28px;}
 .brand .txt .name{font-size:20px;font-weight:700;color:var(--green);letter-spacing:1px;line-height:1.15;}
 .brand .txt .org{font-size:12px;color:var(--gold);letter-spacing:2px;margin-top:3px;}
-.brand .admin-link{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+.brand .admin-link{position:absolute;right:0;top:50%;transform:translateY(-50%);
+  display:inline-flex;align-items:center;justify-content:center;
   width:40px;height:40px;color:var(--muted);background:none;border:1px solid var(--line);
-  border-radius:50%;cursor:pointer;padding:0;transition:all .15s;}
-.brand .admin-link svg{width:21px;height:21px;}
-.brand .admin-link:hover{color:var(--teal-dark);border-color:var(--teal);transform:rotate(45deg);}
+  border-radius:50%;cursor:pointer;padding:0;transition:color .15s,border-color .15s;}
+.brand .admin-link svg{width:21px;height:21px;transition:transform .2s;}
+.brand .admin-link:hover{color:var(--teal-dark);border-color:var(--teal);}
+.brand .admin-link:hover svg{transform:rotate(45deg);}
 
 .hero{text-align:center;margin:8px 0 22px;}
 .hero .eyebrow{font-size:12px;letter-spacing:6px;color:var(--gold);font-weight:600;}
@@ -49,6 +51,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 .capsule:hover{border-color:var(--teal);color:var(--teal-dark);}
 .capsule.active{background:#79bdb0;border-color:#79bdb0;color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(121,189,176,.32);}
 .capsule.all.active{background:#79bdb0;border-color:#79bdb0;}
+.cap-scroll{display:none;height:5px;background:#ece3d2;border-radius:3px;margin:10px 2px 0;}
+.cap-thumb{height:100%;width:30%;background:var(--teal);border-radius:3px;}
 
 .syncbar{display:none;align-items:center;gap:10px;margin:0 4px 20px;font-size:12.5px;color:var(--muted);}
 .resync{background:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--teal-dark);cursor:pointer;}
@@ -125,10 +129,9 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   .panel{padding:13px 14px;}
   .panel-row{flex-direction:column;gap:9px;}
   .panel-label{margin-top:0;align-self:flex-start;}
-  .capsules{width:100%;min-width:0;flex:1 1 auto;flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;
-    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:thin;}
-  .capsules::-webkit-scrollbar{height:5px;}
-  .capsules::-webkit-scrollbar-thumb{background:#d8e0d6;border-radius:3px;}
+  .capsules{width:100%;min-width:0;flex:1 1 auto;flex-wrap:nowrap;overflow-x:auto;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:none;}
+  .capsules::-webkit-scrollbar{display:none;}
   .capsule{flex:0 0 auto;padding:8px 14px;font-size:13.5px;scroll-snap-align:start;}
   .clinic-box{padding:16px 14px 18px;}
   .doc-grid{gap:8px;}
@@ -159,6 +162,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
       <span class="panel-label">🏥 瀏覽</span>
       <div class="capsules" id="capsules"></div>
     </div>
+    <div class="cap-scroll" id="capScroll"><div class="cap-thumb" id="capThumb"></div></div>
   </div>
   <div class="syncbar">
     <span id="syncStatus"></span>
@@ -659,7 +663,27 @@ function renderContent(){
   const list=current==="all"?CONFIG.clinics:[CONFIG.clinics[current]];
   list.forEach(c=>{ if(c) wrap.appendChild(clinicBox(c)); });
 }
-function renderFront(){ renderCapsules(); renderContent(); }
+function renderFront(){ renderCapsules(); renderContent(); updateCapScroll(); setTimeout(updateCapScroll,250); }
+function updateCapScroll(){
+  const cap=document.getElementById("capsules");
+  const track=document.getElementById("capScroll");
+  const thumb=document.getElementById("capThumb");
+  if(!cap||!track||!thumb) return;
+  const sw=cap.scrollWidth, cw=cap.clientWidth;
+  if(sw<=cw+4){ track.style.display="none"; return; }   // 沒有溢出(桌機換行)就不顯示
+  track.style.display="block";
+  const ratio=cw/sw;
+  const thumbW=Math.max(14, ratio*100);
+  thumb.style.width=thumbW+"%";
+  const maxScroll=sw-cw;
+  const pos=maxScroll>0?(cap.scrollLeft/maxScroll):0;
+  thumb.style.marginLeft=(pos*(100-thumbW))+"%";
+}
+(function(){
+  const cap=document.getElementById("capsules");
+  if(cap) cap.addEventListener("scroll", updateCapScroll, {passive:true});
+  window.addEventListener("resize", updateCapScroll);
+})();
 
 /* ---------- 即時同步官網名單 ---------- */
 function setSyncStatus(state, extra){
