@@ -115,6 +115,25 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   padding:11px 22px;border-radius:999px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;
   transition:opacity .25s;z-index:80;pointer-events:none;}
 .toast.show{opacity:1;}
+
+/* 手機版：院區篩選改單行可橫向滑動，避免院區增加時越拉越長 */
+@media (max-width:600px){
+  .wrap{padding:16px 14px 40px;}
+  .brand .logo-img{height:46px;}
+  .hero h1{font-size:25px;letter-spacing:2px;}
+  .hero p{font-size:12.5px;padding:0 6px;}
+  .panel{padding:13px 14px;}
+  .panel-row{gap:10px;}
+  .panel-label{margin-top:1px;}
+  .capsules{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:thin;}
+  .capsules::-webkit-scrollbar{height:5px;}
+  .capsules::-webkit-scrollbar-thumb{background:#d8e0d6;border-radius:3px;}
+  .capsule{flex:0 0 auto;padding:8px 14px;font-size:13.5px;scroll-snap-align:start;}
+  .clinic-box{padding:16px 14px 18px;}
+  .doc-grid{gap:8px;}
+  .doc-btn{font-size:14px;padding:8px 15px;}
+}
 </style>
 </head>
 <body>
