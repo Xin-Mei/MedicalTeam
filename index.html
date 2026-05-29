@@ -622,7 +622,7 @@ function openDoctor(d){
 function clinicBox(c){
   const box=document.createElement("div"); box.className="clinic-box";
   const head=document.createElement("div"); head.className="clinic-head";
-  head.innerHTML='<span class="clinic-title-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M10 11h4M12 9v4"/></svg><span class="clinic-title">'+escHtml(c.name)+'</span></span><span class="clinic-count">'+c.doctors.length+' 位</span>';
+  head.innerHTML='<span class="clinic-title-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg><span class="clinic-title">'+escHtml(c.name)+'</span></span><span class="clinic-count">'+c.doctors.length+' 位</span>';
   box.appendChild(head);
   const grid=document.createElement("div"); grid.className="doc-grid";
   c.doctors.forEach(d=>{
