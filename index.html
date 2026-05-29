@@ -94,6 +94,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 .adm-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
 .adm-row input{flex:1;border:1px solid #d9d0bd;border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;}
 .adm-row input.name{flex:0 0 150px;}
+.adm-row .mv{display:flex;flex-direction:column;gap:2px;flex:none;}
+.adm-row .mv button{background:#eef1ec;border:none;border-radius:5px;width:26px;height:16px;line-height:1;font-size:9px;cursor:pointer;color:#6b7770;padding:0;}
+.adm-row .mv button:hover{background:#d8e6e0;color:var(--teal-dark);}
+.adm-row .mv button:disabled{opacity:.3;cursor:default;}
 .adm-row .del{background:#fbeceb;color:#c0594f;border:none;border-radius:8px;width:32px;height:34px;cursor:pointer;font-size:16px;flex:none;}
 .adm-row .apply{background:#eef5f2;color:var(--teal-dark);border:none;border-radius:8px;padding:0 10px;height:34px;cursor:pointer;font-size:12px;flex:none;white-space:nowrap;}
 .adm-add{background:none;border:1px dashed #cdd4cf;color:var(--teal-dark);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;}
@@ -669,12 +673,18 @@ function parseDoctorsFromHTML(html){
   return out;
 }
 function mergeClinic(c, live){
-  const byName=new Map((c.doctors||[]).map(d=>[d.name, d]));
-  c.doctors = live.map(ld=>{
-    const ex=byName.get(ld.name);
-    if(ex){ if(!ex.url) ex.url=ld.url; return ex; } // 保留後台設定的連結
-    return {name:ld.name, url:ld.url};               // 新醫師：預設連到官網個人頁
+  // 保留後台排好的順序：既有醫師依原順序留下(仍在官網者)，官網新增者補在最後
+  const liveByName=new Map(live.map(d=>[d.name, d]));
+  const kept=new Set();
+  const result=[];
+  (c.doctors||[]).forEach(d=>{
+    if(liveByName.has(d.name)){
+      if(!d.url) d.url=liveByName.get(d.name).url; // 補上官網連結
+      result.push(d); kept.add(d.name);
+    }
   });
+  live.forEach(ld=>{ if(!kept.has(ld.name)) result.push({name:ld.name, url:ld.url}); });
+  c.doctors = result;
 }
 let syncing=false;
 async function liveSync(manual){
@@ -783,13 +793,17 @@ function renderAdmin(){
 
     c.doctors.forEach((d,di)=>{
       const r=document.createElement("div"); r.className="adm-row";
-      r.innerHTML='<input class="name" value="'+escAttr(d.name)+'" placeholder="醫師姓名">'+
+      r.innerHTML='<span class="mv"><button class="up" title="上移"'+(di===0?" disabled":"")+'>▲</button>'+
+        '<button class="dn" title="下移"'+(di===c.doctors.length-1?" disabled":"")+'>▼</button></span>'+
+        '<input class="name" value="'+escAttr(d.name)+'" placeholder="醫師姓名">'+
         '<input value="'+escAttr(d.url)+'" placeholder="點擊後前往的網址 https://">'+
         '<button class="apply" title="套用此連結到所有院區同名醫師">套用全院區</button>'+
         '<button class="del" title="刪除此醫師">✕</button>';
       const ins=r.querySelectorAll("input");
       ins[0].oninput=e=>{ d.name=e.target.value; saveDraft(); };
       ins[1].oninput=e=>{ d.url=e.target.value; saveDraft(); };
+      r.querySelector(".up").onclick=()=>moveDoctor(c,di,-1);
+      r.querySelector(".dn").onclick=()=>moveDoctor(c,di,1);
       r.querySelector(".apply").onclick=()=>applyToSameName(d.name, ins[1].value);
       r.querySelector(".del").onclick=()=>{ c.doctors.splice(di,1); saveDraft(); renderAdmin(); renderFront(); };
       rows.appendChild(r);
@@ -813,6 +827,12 @@ function renderAdmin(){
 function applyToSameName(name,url){
   let n=0; CONFIG.clinics.forEach(c=>c.doctors.forEach(d=>{ if(d.name===name){ d.url=url; n++; } }));
   saveDraft(); renderAdmin(); toast("已套用到 "+n+" 筆「"+name+"」");
+}
+function moveDoctor(c, di, dir){
+  const ni=di+dir;
+  if(ni<0 || ni>=c.doctors.length) return;
+  const t=c.doctors[di]; c.doctors[di]=c.doctors[ni]; c.doctors[ni]=t;
+  saveDraft(); renderAdmin(); renderFront();
 }
 
 /* ---------- 匯出 ---------- */
