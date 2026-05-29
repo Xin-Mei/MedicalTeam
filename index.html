@@ -123,9 +123,9 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   .hero h1{font-size:25px;letter-spacing:2px;}
   .hero p{font-size:12.5px;padding:0 6px;}
   .panel{padding:13px 14px;}
-  .panel-row{gap:10px;}
-  .panel-label{margin-top:1px;}
-  .capsules{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;
+  .panel-row{flex-direction:column;gap:9px;}
+  .panel-label{margin-top:0;align-self:flex-start;}
+  .capsules{width:100%;min-width:0;flex:1 1 auto;flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;
     -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:thin;}
   .capsules::-webkit-scrollbar{height:5px;}
   .capsules::-webkit-scrollbar-thumb{background:#d8e0d6;border-radius:3px;}
