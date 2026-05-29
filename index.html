@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head>
+<html lang="zh-Hant">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>金鶯診所 - 醫師個人班表</title>
@@ -141,12 +142,12 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 <body>
 <div class="wrap">
   <div class="brand">
-    <img class="logo-img" id="logoImg" alt="金鶯診所 金鶯健康志業" src="logo.png">
+    <img class="logo-img" id="logoImg" alt="金鶯診所 金鶯健康志業">
     <div class="brand-fallback" id="logoFb" style="display:none">
-      <div class="logo-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-7 8-11a4 4 0 0 0-8-1 4 4 0 0 0-8 1c0 4 3 8 8 11z"></path></svg></div>
+      <div class="logo-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-7 8-11a4 4 0 0 0-8-1 4 4 0 0 0-8 1c0 4 3 8 8 11z"/></svg></div>
       <div class="txt"><div class="name">金鶯診所</div><div class="org">金鶯健康志業</div></div>
     </div>
-    <button class="admin-link" id="openAdmin" title="後台維護" aria-label="後台維護"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+    <button class="admin-link" id="openAdmin" title="後台維護" aria-label="後台維護"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
   </div>
 
   <div class="hero">
@@ -161,10 +162,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
       <span class="panel-label">🏥 瀏覽</span>
       <div class="capsules" id="capsules"></div>
     </div>
-    <div class="cap-scroll" id="capScroll" style="display: none;"><div class="cap-thumb" id="capThumb"></div></div>
+    <div class="cap-scroll" id="capScroll"><div class="cap-thumb" id="capThumb"></div></div>
   </div>
   <div class="syncbar">
-    <span id="syncStatus">🔄 正在同步官網最新名單…</span>
+    <span id="syncStatus"></span>
     <button class="resync" id="resyncBtn">🔄 重新同步官網名單</button>
   </div>
 
@@ -178,16 +179,16 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   </div>
 </div>
 
-<div class="overlay show" id="adminOverlay">
+<div class="overlay" id="adminOverlay">
   <div class="admin">
     <div class="admin-head"><h2>⚙ 後台維護</h2><button class="x" id="closeAdmin">×</button></div>
-    <div id="gate" class="gate" style="display: none;">
+    <div id="gate" class="gate">
       <p>請輸入管理密碼</p>
       <input type="password" id="gatePass" placeholder="管理密碼"><br><br>
       <button class="btn primary" id="gateBtn">進入後台</button>
       <p style="margin-top:14px">預設密碼：<b>drking</b>（可於後台內變更）</p>
     </div>
-    <div id="adminBody" class="admin-body" style="display: block;"></div>
+    <div id="adminBody" class="admin-body" style="display:none"></div>
   </div>
 </div>
 
@@ -201,7 +202,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
    url 留空 = 前台顯示為灰色未啟用按鈕
    ========================================================= */
 const DEFAULT_CONFIG = /*CFG_START*/{
-  "adminPass": "elite20132013",
+  "adminPass": "drking",
   "autoSync": true,
   "proxy": "https://api.allorigins.win/raw?url=",
   "clinics": [
@@ -228,6 +229,10 @@ const DEFAULT_CONFIG = /*CFG_START*/{
         {
           "name": "陳郁凡醫師",
           "url": "https://www.drking.com.tw/product-4-2.html"
+        },
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-2.html"
         }
       ]
     },
@@ -266,6 +271,10 @@ const DEFAULT_CONFIG = /*CFG_START*/{
         {
           "name": "張覲麟醫師",
           "url": "https://www.drking.com.tw/product-12.html"
+        },
+        {
+          "name": "林昆澤醫師",
+          "url": "https://www.drking.com.tw/product-37.html"
         },
         {
           "name": "李軍逸醫師",
@@ -396,14 +405,6 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "src": "https://www.drking.com.tw/products-7.html",
       "doctors": [
         {
-          "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-7.html"
-        },
-        {
-          "name": "總院長 黃錦崧執行長",
-          "url": "https://www.drking.com.tw/product-10-7.html"
-        },
-        {
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-31.html"
         },
@@ -433,6 +434,10 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "name": "龍潭院區",
       "src": "https://www.drking.com.tw/products-8.html",
       "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-8.html"
+        },
         {
           "name": "何冠達院長",
           "url": "https://www.drking.com.tw/product-35.html"
@@ -520,6 +525,10 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "url": "https://www.drking.com.tw/product-59.html"
         },
         {
+          "name": "鍾偉瑋醫師",
+          "url": "https://www.drking.com.tw/product-6-11.html"
+        },
+        {
           "name": "李彥輝醫師",
           "url": "https://www.drking.com.tw/product-30-11.html"
         },
@@ -533,10 +542,6 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "name": "平鎮院區",
       "src": "https://www.drking.com.tw/products-12.html",
       "doctors": [
-        {
-          "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-12.html"
-        },
         {
           "name": "減重名醫 蕭捷健醫師",
           "url": "https://www.drking.com.tw/product-9-12.html"
@@ -552,10 +557,6 @@ const DEFAULT_CONFIG = /*CFG_START*/{
         {
           "name": "何冠達院長",
           "url": "https://www.drking.com.tw/product-64.html"
-        },
-        {
-          "name": "廖崑竹院長",
-          "url": "https://www.drking.com.tw/product-80.html"
         }
       ]
     },
@@ -563,10 +564,6 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "name": "埔心院區",
       "src": "https://www.drking.com.tw/products-13.html",
       "doctors": [
-        {
-          "name": "總院長 黃錦崧執行長",
-          "url": "https://www.drking.com.tw/product-10-13.html"
-        },
         {
           "name": "梁培毅院長",
           "url": "https://www.drking.com.tw/product-29.html"
@@ -589,6 +586,14 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "name": "觀音院區",
       "src": "https://www.drking.com.tw/products-14.html",
       "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-14.html"
+        },
+        {
+          "name": "總院長 黃錦崧執行長",
+          "url": "https://www.drking.com.tw/product-10-14.html"
+        },
         {
           "name": "李逸瑋院長",
           "url": "https://www.drking.com.tw/product-38.html"
@@ -921,9 +926,14 @@ function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg
   img.onerror=next; next();
 })();
 
+/* 確保載入時「後台維護」視窗為關閉狀態（防止任何快取/狀態造成自動跳出） */
+(function(){
+  const o=document.getElementById("adminOverlay"); if(o) o.classList.remove("show");
+  const g=document.getElementById("gate"); if(g) g.style.display="block";
+  const ab=document.getElementById("adminBody"); if(ab) ab.style.display="none";
+})();
 renderFront();
 syncFromData(false);
 </script>
-
-
-</body></html>
+</body>
+</html>
