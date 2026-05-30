@@ -855,4 +855,117 @@ function renderAdmin(){
     const cnRow=document.createElement("div"); cnRow.className="adm-row";
     cnRow.innerHTML='<input class="name" value="'+escAttr(c.name)+'" placeholder="院區名稱"><span style="font-size:12px;color:#8a9690">院區名稱</span><button class="del" title="刪除整個院區">🗑</button>';
     cnRow.querySelector("input").oninput=e=>{ c.name=e.target.value; saveDraft(); };
-    cnRow.querySelector(".del").onclick=()=>{ if(confirm("確定刪除「"+c.name+"」整個院區�
+    cnRow.querySelector(".del").onclick=()=>{ if(confirm("確定刪除「"+c.name+"」整個院區？")){ CONFIG.clinics.splice(ci,1); saveDraft(); renderAdmin(); renderFront(); } };
+    rows.appendChild(cnRow);
+
+    const srcRow=document.createElement("div"); srcRow.className="adm-src";
+    srcRow.innerHTML='<span>官網分頁(同步用)</span><input value="'+escAttr(c.src||"")+'" placeholder="https://www.drking.com.tw/products-N.html">';
+    srcRow.querySelector("input").oninput=e=>{ c.src=e.target.value; saveDraft(); };
+    rows.appendChild(srcRow);
+
+    c.doctors.forEach((d,di)=>{
+      const r=document.createElement("div"); r.className="adm-row";
+      r.innerHTML='<span class="mv"><button class="up" title="上移"'+(di===0?" disabled":"")+'>▲</button>'+
+        '<button class="dn" title="下移"'+(di===c.doctors.length-1?" disabled":"")+'>▼</button></span>'+
+        '<input class="name" value="'+escAttr(d.name)+'" placeholder="醫師姓名">'+
+        '<input value="'+escAttr(d.url)+'" placeholder="點擊後前往的網址 https://">'+
+        '<button class="apply" title="套用此連結到所有院區同名醫師">套用全院區</button>'+
+        '<button class="del" title="刪除此醫師">✕</button>';
+      const ins=r.querySelectorAll("input");
+      ins[0].oninput=e=>{ d.name=e.target.value; saveDraft(); };
+      ins[1].oninput=e=>{ d.url=e.target.value; saveDraft(); };
+      r.querySelector(".up").onclick=()=>moveDoctor(c,di,-1);
+      r.querySelector(".dn").onclick=()=>moveDoctor(c,di,1);
+      r.querySelector(".apply").onclick=()=>applyToSameName(d.name, ins[1].value);
+      r.querySelector(".del").onclick=()=>{ c.doctors.splice(di,1); saveDraft(); renderAdmin(); renderFront(); };
+      rows.appendChild(r);
+    });
+    const add=document.createElement("button"); add.className="adm-add"; add.textContent="＋ 新增醫師";
+    add.onclick=()=>{ c.doctors.push({name:"新醫師",url:""}); saveDraft(); renderAdmin(); renderFront(); };
+    rows.appendChild(add);
+    det.appendChild(rows); cw.appendChild(det);
+  });
+  body.querySelector("#setPass").oninput=e=>{ CONFIG.adminPass=e.target.value; saveDraft(); };
+  body.querySelector("#setAuto").onchange=e=>{ CONFIG.autoSync=e.target.checked; saveDraft(); };
+  body.querySelector("#setProxy").oninput=e=>{ CONFIG.proxy=e.target.value; saveDraft(); };
+  body.querySelector("#addClinic").onclick=()=>{ CONFIG.clinics.push({name:"新院區",src:"",doctors:[]}); saveDraft(); renderAdmin(); renderFront(); };
+  body.querySelector("#exportBtn").onclick=exportSite;
+  body.querySelector("#resync2").onclick=()=>{ toast("開始同步…"); syncFromData(true).then(()=>renderAdmin()); };
+  body.querySelector("#exportJson").onclick=exportJson;
+  body.querySelector("#importJson").onclick=importJson;
+  body.querySelector("#resetBtn").onclick=()=>{ if(confirm("還原為原始名冊？您填的連結將清除（建議先匯出備份）。")){ CONFIG=JSON.parse(JSON.stringify(DEFAULT_CONFIG)); saveDraft(); renderAdmin(); renderFront(); } };
+  renderFront();
+  body.scrollTop=_scroll;
+}
+function applyToSameName(name,url){
+  let n=0; CONFIG.clinics.forEach(c=>c.doctors.forEach(d=>{ if(d.name===name){ d.url=url; n++; } }));
+  saveDraft(); renderAdmin(); toast("已套用到 "+n+" 筆「"+name+"」");
+}
+function moveDoctor(c, di, dir){
+  const ni=di+dir;
+  if(ni<0 || ni>=c.doctors.length) return;
+  const t=c.doctors[di]; c.doctors[di]=c.doctors[ni]; c.doctors[ni]=t;
+  saveDraft(); renderAdmin(); renderFront();
+}
+
+/* ---------- 匯出 ---------- */
+function exportSite(){
+  CONFIG.configVersion=Date.now();
+  saveDraft();
+  document.getElementById("content").innerHTML="";
+  document.getElementById("adminBody").innerHTML="";
+  document.getElementById("capsules").innerHTML="";
+  let html="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+  const json=JSON.stringify(CONFIG,null,2);
+  html=html.replace(/\/\*CFG_START\*\/[\s\S]*?\/\*CFG_END\*\//,"/*CFG_START*/"+json+"/*CFG_END*/");
+  download(html,"index.html","text/html");
+  renderAdmin();
+  toast("已下載 index.html，請上傳取代線上檔案");
+}
+function exportJson(){
+  CONFIG.configVersion=Date.now(); saveDraft();
+  download(JSON.stringify(CONFIG,null,2),"config.json","application/json");
+  toast("已下載 config.json，上傳到網站(與index.html同層)即可讓所有裝置即時更新");
+}
+function importJson(){
+  const inp=document.createElement("input"); inp.type="file"; inp.accept=".json,application/json";
+  inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
+    r.onload=()=>{ try{ const c=JSON.parse(r.result); if(!c.clinics) throw 0; CONFIG=c; saveDraft(); renderAdmin(); renderFront(); toast("已匯入設定"); }catch(e){ toast("檔案格式不正確"); } };
+    r.readAsText(f); };
+  inp.click();
+}
+function download(text,name,mime){
+  const blob=new Blob([text],{type:mime+";charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+
+/* ---------- utils ---------- */
+function escHtml(s){ return String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])); }
+function escAttr(s){ return String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m])); }
+let toastTimer;
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2200); }
+
+/* logo：優先用同目錄 logo.png，其次官網logo，最後內建徽記 */
+(function(){
+  const cands=["logo.png","https://www.drking.com.tw/uploads/use/20250731111412d249.jpg"];
+  const img=document.getElementById("logoImg"); let i=0;
+  function next(){ if(i>=cands.length){ img.style.display="none"; document.getElementById("logoFb").style.display="flex"; return; } img.src=cands[i++]; }
+  img.onerror=next; next();
+})();
+
+/* 確保載入時「後台維護」視窗為關閉狀態 */
+(function(){
+  const o=document.getElementById("adminOverlay"); if(o) o.classList.remove("show");
+  const g=document.getElementById("gate"); if(g) g.style.display="block";
+  const ab=document.getElementById("adminBody"); if(ab) ab.style.display="none";
+})();
+renderFront();
+(async function(){
+  await loadRemoteConfig();
+  await syncFromData(false);
+})();
+</script>
+</body>
+</html>
