@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head>
+<html lang="zh-Hant">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>金鶯診所 - 醫師個人班表</title>
 <style>
 :root{
@@ -141,12 +145,12 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 <body>
 <div class="wrap">
   <div class="brand">
-    <img class="logo-img" id="logoImg" alt="金鶯診所 金鶯健康志業" src="logo.png">
+    <img class="logo-img" id="logoImg" alt="金鶯診所 金鶯健康志業">
     <div class="brand-fallback" id="logoFb" style="display:none">
-      <div class="logo-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-7 8-11a4 4 0 0 0-8-1 4 4 0 0 0-8 1c0 4 3 8 8 11z"></path></svg></div>
+      <div class="logo-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-7 8-11a4 4 0 0 0-8-1 4 4 0 0 0-8 1c0 4 3 8 8 11z"/></svg></div>
       <div class="txt"><div class="name">金鶯診所</div><div class="org">金鶯健康志業</div></div>
     </div>
-    <button class="admin-link" id="openAdmin" title="後台維護" aria-label="後台維護"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+    <button class="admin-link" id="openAdmin" title="後台維護" aria-label="後台維護"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
   </div>
 
   <div class="hero">
@@ -161,10 +165,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
       <span class="panel-label">🏥 瀏覽</span>
       <div class="capsules" id="capsules"></div>
     </div>
-    <div class="cap-scroll" id="capScroll" style="display: none;"><div class="cap-thumb" id="capThumb"></div></div>
+    <div class="cap-scroll" id="capScroll"><div class="cap-thumb" id="capThumb"></div></div>
   </div>
   <div class="syncbar">
-    <span id="syncStatus">✓ 已同步官網最新名單（2026/5/29 17:36:59）</span>
+    <span id="syncStatus"></span>
     <button class="resync" id="resyncBtn">🔄 重新同步官網名單</button>
   </div>
 
@@ -178,20 +182,20 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   </div>
 </div>
 
-<div class="overlay show" id="adminOverlay">
+<div class="overlay" id="adminOverlay">
   <div class="admin">
     <div class="admin-head"><h2>⚙ 後台維護</h2><button class="x" id="closeAdmin">×</button></div>
-    <div id="gate" class="gate" style="display: none;">
+    <div id="gate" class="gate">
       <p>請輸入管理密碼</p>
       <input type="password" id="gatePass" placeholder="管理密碼"><br><br>
       <button class="btn primary" id="gateBtn">進入後台</button>
       <p style="margin-top:14px">預設密碼：<b>drking</b>（可於後台內變更）</p>
     </div>
-    <div id="adminBody" class="admin-body" style="display: block;"></div>
+    <div id="adminBody" class="admin-body" style="display:none"></div>
   </div>
 </div>
 
-<div class="toast" id="toast">開始同步…</div>
+<div class="toast" id="toast"></div>
 
 <script>
 /* =========================================================
@@ -201,8 +205,9 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
    url 留空 = 前台顯示為灰色未啟用按鈕
    ========================================================= */
 const DEFAULT_CONFIG = /*CFG_START*/{
-  "adminPass": "elite20132013",
-  "autoSync": true,
+  "configVersion": 2,
+  "adminPass": "drking",
+  "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
   "clinics": [
     {
@@ -290,16 +295,16 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "url": "https://www.drking.com.tw/product-20-4.html"
         },
         {
+          "name": "陳永仁醫師",
+          "url": "https://www.drking.com.tw/product-17-4.html"
+        },
+        {
           "name": "尤騰醫師",
           "url": "https://www.drking.com.tw/product-19-4.html"
         },
         {
           "name": "何中誠醫師",
           "url": "https://www.drking.com.tw/product-18-4.html"
-        },
-        {
-          "name": "陳永仁醫師",
-          "url": "https://www.drking.com.tw/product-17-4.html"
         },
         {
           "name": "李軍逸醫師",
@@ -378,16 +383,16 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "url": "https://www.drking.com.tw/product-20-6.html"
         },
         {
+          "name": "陳永仁醫師",
+          "url": "https://www.drking.com.tw/product-17-6.html"
+        },
+        {
           "name": "尤騰醫師",
           "url": "https://www.drking.com.tw/product-19-6.html"
         },
         {
           "name": "何中誠醫師",
           "url": "https://www.drking.com.tw/product-18-6.html"
-        },
-        {
-          "name": "陳永仁醫師",
-          "url": "https://www.drking.com.tw/product-17-6.html"
         }
       ]
     },
@@ -397,11 +402,11 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "doctors": [
         {
           "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-7.html"
+          "url": "https://www.drking.com.tw/product-11-3.html"
         },
         {
           "name": "總院長 黃錦崧執行長",
-          "url": "https://www.drking.com.tw/product-10-7.html"
+          "url": "https://www.drking.com.tw/product-10-3.html"
         },
         {
           "name": "廖崑竹院長",
@@ -529,7 +534,7 @@ const DEFAULT_CONFIG = /*CFG_START*/{
         },
         {
           "name": "廖崇淵醫師",
-          "url": "https://www.drking.com.tw/product-81.html"
+          "url": "https://www.drking.com.tw/product-20-4.html"
         }
       ]
     },
@@ -539,7 +544,7 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "doctors": [
         {
           "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-12.html"
+          "url": "https://www.drking.com.tw/product-11-3.html"
         },
         {
           "name": "減重名醫 蕭捷健醫師",
@@ -559,7 +564,7 @@ const DEFAULT_CONFIG = /*CFG_START*/{
         },
         {
           "name": "廖崑竹院長",
-          "url": "https://www.drking.com.tw/product-80.html"
+          "url": "https://www.drking.com.tw/product-31.html"
         }
       ]
     },
@@ -569,7 +574,7 @@ const DEFAULT_CONFIG = /*CFG_START*/{
       "doctors": [
         {
           "name": "總院長 黃錦崧執行長",
-          "url": "https://www.drking.com.tw/product-10-13.html"
+          "url": "https://www.drking.com.tw/product-10-3.html"
         },
         {
           "name": "梁培毅院長",
@@ -615,7 +620,10 @@ let CONFIG = loadConfig();
 let current = "all"; // "all"=全院區醫師，或院區索引
 
 function loadConfig(){
-  try{ const s=localStorage.getItem(LS_KEY); if(s){ const c=JSON.parse(s); if(c&&c.clinics) return c; } }catch(e){}
+  // 只有當本機暫存的版本與線上檔版本相同時才沿用，否則一律採用線上檔(baked)，
+  // 確保上傳新檔後所有裝置看到的順序一致、不被舊的本機暫存蓋掉。
+  try{ const s=localStorage.getItem(LS_KEY); if(s){ const c=JSON.parse(s);
+    if(c&&c.clinics && c.configVersion===DEFAULT_CONFIG.configVersion) return c; } }catch(e){}
   return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
 }
 function saveDraft(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(CONFIG)); }catch(e){} }
@@ -747,7 +755,7 @@ async function liveSync(manual){
     }catch(e){ fail++; }
   }
   syncing=false;
-  if(ok){ saveDraft(); renderFront(); setSyncStatus("ok", new Date().toLocaleString("zh-TW",{hour12:false})); }
+  if(ok){ renderFront(); setSyncStatus("ok", new Date().toLocaleString("zh-TW",{hour12:false})); }
   else setSyncStatus("fail");
 }
 function mergeFromClinics(list){
@@ -767,7 +775,7 @@ async function syncFromData(manual){
     if(r.ok){
       const data=await r.json();
       if(data && Array.isArray(data.clinics) && data.clinics.length){
-        mergeFromClinics(data.clinics); saveDraft(); renderFront();
+        mergeFromClinics(data.clinics); renderFront();
         const when=data.generatedAt?new Date(data.generatedAt).toLocaleString("zh-TW",{hour12:false}):new Date().toLocaleString("zh-TW",{hour12:false});
         setSyncStatus("ok", when); return;
       }
@@ -777,6 +785,22 @@ async function syncFromData(manual){
   await liveSync(manual);
 }
 document.getElementById("resyncBtn").onclick=()=>syncFromData(true);
+
+/* 每次開啟都即時抓取外部設定檔 config.json（帶時間戳記避開快取），
+   讓所有裝置每次開啟都拿到最新的醫師名單/連結/順序，不受 HTML 快取影響。
+   若沒有 config.json，就沿用內建(baked)設定。 */
+async function loadRemoteConfig(){
+  try{
+    const r=await fetch("config.json?t="+Date.now(), {cache:"no-store"});
+    if(r.ok){
+      const data=await r.json();
+      if(data && Array.isArray(data.clinics) && data.clinics.length){
+        CONFIG=data; current="all"; renderFront(); return true;
+      }
+    }
+  }catch(e){}
+  return false;
+}
 
 /* ---------- 後台 ---------- */
 const overlay=document.getElementById("adminOverlay");
@@ -804,15 +828,15 @@ function renderAdmin(){
   const _scroll=body.scrollTop;
   body.innerHTML=
     '<div class="toolbar">'+
-      '<button class="btn primary" id="exportBtn">💾 匯出可上線網頁</button>'+
+      '<button class="btn primary" id="exportJson">💾 發布更新 (config.json)</button>'+
       '<button class="btn ghost" id="resync2">🔄 立即同步官網名單</button>'+
-      '<button class="btn ghost" id="exportJson">下載設定 (JSON)</button>'+
+      '<button class="btn ghost" id="exportBtn">下載整頁 HTML</button>'+
       '<button class="btn ghost" id="importJson">匯入設定</button>'+
       '<button class="btn ghost" id="resetBtn">還原預設名冊</button>'+
     '</div>'+
-    '<div class="hint">每位醫師填「點擊後前往的網址」（已預填官網個人頁，可改成任何連結）。'+
-      '名單會在開啟頁面時自動向官網同步（新增/異動醫師會自動帶入）。'+
-      '改完按「💾 匯出可上線網頁」下載新 HTML 上傳取代，所有人即可看到。</div>'+
+    '<div class="hint">每位醫師填「點擊後前往的網址」、用 ▲▼ 調整順序。改完按「💾 發布更新」下載 '+
+      '<b>config.json</b>，上傳到網站(與 index.html 同層)覆蓋即可——所有裝置每次開啟都會即時讀取最新 config.json，'+
+      '不受手機快取影響。（「下載整頁 HTML」是把設定燒進 index.html 的備用方式。）</div>'+
     '<div id="admClinics"></div>'+
     '<div class="settings">'+
       '<label>🔑 管理密碼：<input type="text" id="setPass" value="'+escAttr(CONFIG.adminPass||"drking")+'"></label>'+
@@ -831,111 +855,4 @@ function renderAdmin(){
     const cnRow=document.createElement("div"); cnRow.className="adm-row";
     cnRow.innerHTML='<input class="name" value="'+escAttr(c.name)+'" placeholder="院區名稱"><span style="font-size:12px;color:#8a9690">院區名稱</span><button class="del" title="刪除整個院區">🗑</button>';
     cnRow.querySelector("input").oninput=e=>{ c.name=e.target.value; saveDraft(); };
-    cnRow.querySelector(".del").onclick=()=>{ if(confirm("確定刪除「"+c.name+"」整個院區？")){ CONFIG.clinics.splice(ci,1); saveDraft(); renderAdmin(); renderFront(); } };
-    rows.appendChild(cnRow);
-
-    const srcRow=document.createElement("div"); srcRow.className="adm-src";
-    srcRow.innerHTML='<span>官網分頁(同步用)</span><input value="'+escAttr(c.src||"")+'" placeholder="https://www.drking.com.tw/products-N.html">';
-    srcRow.querySelector("input").oninput=e=>{ c.src=e.target.value; saveDraft(); };
-    rows.appendChild(srcRow);
-
-    c.doctors.forEach((d,di)=>{
-      const r=document.createElement("div"); r.className="adm-row";
-      r.innerHTML='<span class="mv"><button class="up" title="上移"'+(di===0?" disabled":"")+'>▲</button>'+
-        '<button class="dn" title="下移"'+(di===c.doctors.length-1?" disabled":"")+'>▼</button></span>'+
-        '<input class="name" value="'+escAttr(d.name)+'" placeholder="醫師姓名">'+
-        '<input value="'+escAttr(d.url)+'" placeholder="點擊後前往的網址 https://">'+
-        '<button class="apply" title="套用此連結到所有院區同名醫師">套用全院區</button>'+
-        '<button class="del" title="刪除此醫師">✕</button>';
-      const ins=r.querySelectorAll("input");
-      ins[0].oninput=e=>{ d.name=e.target.value; saveDraft(); };
-      ins[1].oninput=e=>{ d.url=e.target.value; saveDraft(); };
-      r.querySelector(".up").onclick=()=>moveDoctor(c,di,-1);
-      r.querySelector(".dn").onclick=()=>moveDoctor(c,di,1);
-      r.querySelector(".apply").onclick=()=>applyToSameName(d.name, ins[1].value);
-      r.querySelector(".del").onclick=()=>{ c.doctors.splice(di,1); saveDraft(); renderAdmin(); renderFront(); };
-      rows.appendChild(r);
-    });
-    const add=document.createElement("button"); add.className="adm-add"; add.textContent="＋ 新增醫師";
-    add.onclick=()=>{ c.doctors.push({name:"新醫師",url:""}); saveDraft(); renderAdmin(); renderFront(); };
-    rows.appendChild(add);
-    det.appendChild(rows); cw.appendChild(det);
-  });
-  body.querySelector("#setPass").oninput=e=>{ CONFIG.adminPass=e.target.value; saveDraft(); };
-  body.querySelector("#setAuto").onchange=e=>{ CONFIG.autoSync=e.target.checked; saveDraft(); };
-  body.querySelector("#setProxy").oninput=e=>{ CONFIG.proxy=e.target.value; saveDraft(); };
-  body.querySelector("#addClinic").onclick=()=>{ CONFIG.clinics.push({name:"新院區",src:"",doctors:[]}); saveDraft(); renderAdmin(); renderFront(); };
-  body.querySelector("#exportBtn").onclick=exportSite;
-  body.querySelector("#resync2").onclick=()=>{ toast("開始同步…"); syncFromData(true).then(()=>renderAdmin()); };
-  body.querySelector("#exportJson").onclick=exportJson;
-  body.querySelector("#importJson").onclick=importJson;
-  body.querySelector("#resetBtn").onclick=()=>{ if(confirm("還原為原始名冊？您填的連結將清除（建議先匯出備份）。")){ CONFIG=JSON.parse(JSON.stringify(DEFAULT_CONFIG)); saveDraft(); renderAdmin(); renderFront(); } };
-  renderFront();
-  body.scrollTop=_scroll;
-}
-function applyToSameName(name,url){
-  let n=0; CONFIG.clinics.forEach(c=>c.doctors.forEach(d=>{ if(d.name===name){ d.url=url; n++; } }));
-  saveDraft(); renderAdmin(); toast("已套用到 "+n+" 筆「"+name+"」");
-}
-function moveDoctor(c, di, dir){
-  const ni=di+dir;
-  if(ni<0 || ni>=c.doctors.length) return;
-  const t=c.doctors[di]; c.doctors[di]=c.doctors[ni]; c.doctors[ni]=t;
-  saveDraft(); renderAdmin(); renderFront();
-}
-
-/* ---------- 匯出 ---------- */
-function exportSite(){
-  document.getElementById("content").innerHTML="";
-  document.getElementById("adminBody").innerHTML="";
-  document.getElementById("capsules").innerHTML="";
-  let html="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
-  const json=JSON.stringify(CONFIG,null,2);
-  html=html.replace(/\/\*CFG_START\*\/[\s\S]*?\/\*CFG_END\*\//,"/*CFG_START*/"+json+"/*CFG_END*/");
-  download(html,"doctor-schedule.html","text/html");
-  renderAdmin();
-  toast("已下載 doctor-schedule.html，請上傳取代線上檔案");
-}
-function exportJson(){ download(JSON.stringify(CONFIG,null,2),"config.json","application/json"); toast("已下載 config.json"); }
-function importJson(){
-  const inp=document.createElement("input"); inp.type="file"; inp.accept=".json,application/json";
-  inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
-    r.onload=()=>{ try{ const c=JSON.parse(r.result); if(!c.clinics) throw 0; CONFIG=c; saveDraft(); renderAdmin(); renderFront(); toast("已匯入設定"); }catch(e){ toast("檔案格式不正確"); } };
-    r.readAsText(f); };
-  inp.click();
-}
-function download(text,name,mime){
-  const blob=new Blob([text],{type:mime+";charset=utf-8"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-}
-
-/* ---------- utils ---------- */
-function escHtml(s){ return String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])); }
-function escAttr(s){ return String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m])); }
-let toastTimer;
-function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2200); }
-
-/* logo：優先用同目錄 logo.png，其次官網logo，最後內建徽記 */
-(function(){
-  const cands=["logo.png","https://www.drking.com.tw/uploads/use/20250731111412d249.jpg"];
-  const img=document.getElementById("logoImg"); let i=0;
-  function next(){ if(i>=cands.length){ img.style.display="none"; document.getElementById("logoFb").style.display="flex"; return; } img.src=cands[i++]; }
-  img.onerror=next; next();
-})();
-
-/* 確保載入時「後台維護」視窗為關閉狀態（防止任何快取/狀態造成自動跳出） */
-(function(){
-  const o=document.getElementById("adminOverlay"); if(o) o.classList.remove("show");
-  const g=document.getElementById("gate"); if(g) g.style.display="block";
-  const ab=document.getElementById("adminBody"); if(ab) ab.style.display="none";
-})();
-renderFront();
-syncFromData(false);
-</script>
-
-
-
-
-</body></html>
+    cnRow.querySelector(".del").onclick=()=>{ if(confirm("確定刪除「"+c.name+"」整個院區�
