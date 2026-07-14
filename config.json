@@ -1,5 +1,5 @@
 {
-  "configVersion": 4,
+  "configVersion": 1784045956587,
   "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
@@ -63,8 +63,8 @@
           "url": "https://www.drking.com.tw/product-13.html"
         },
         {
-          "name": "張覲麟醫師",
-          "url": "https://www.drking.com.tw/product-12.html"
+          "name": "鍾偉瑋醫師",
+          "url": "https://www.drking.com.tw/product-6-3.html"
         },
         {
           "name": "李軍逸醫師",
@@ -139,8 +139,8 @@
           "url": "https://www.drking.com.tw/product-6-5.html"
         },
         {
-          "name": "廖崑竹院長",
-          "url": "https://www.drking.com.tw/product-76.html"
+          "name": "廖崇淵醫師",
+          "url": "https://www.drking.com.tw/product-81-5.html"
         }
       ]
     },
@@ -199,10 +199,6 @@
           "url": "https://www.drking.com.tw/product-11-3.html"
         },
         {
-          "name": "總院長 黃錦崧執行長",
-          "url": "https://www.drking.com.tw/product-10-3.html"
-        },
-        {
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-31.html"
         },
@@ -245,12 +241,12 @@
           "url": "https://www.drking.com.tw/product-32.html"
         },
         {
-          "name": "林昱仁醫師",
-          "url": "https://www.drking.com.tw/product-51.html"
-        },
-        {
           "name": "陳昭銘院長",
           "url": "https://www.drking.com.tw/product-34.html"
+        },
+        {
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-82.html"
         }
       ]
     },
