@@ -1,6 +1,6 @@
 {
-  "configVersion": 2,
-  "adminPass": "drking",
+  "configVersion": 4,
+  "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
   "clinics": [
