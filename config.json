@@ -1,5 +1,5 @@
 {
-  "configVersion": 1785601418667,
+  "configVersion": 1785601643894,
   "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
@@ -147,7 +147,7 @@
           "url": "https://www.drking.com.tw/product-23-5.html"
         },
         {
-          "name": "陳昭銘醫師",
+          "name": "陳昭銘院長",
           "url": "https://www.drking.com.tw/product-69-5.html"
         }
       ]
