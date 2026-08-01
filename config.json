@@ -1,5 +1,5 @@
 {
-  "configVersion": 1784045956587,
+  "configVersion": 1785601418667,
   "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
@@ -127,12 +127,12 @@
           "url": "https://www.drking.com.tw/product-24.html"
         },
         {
-          "name": "陳韋思醫師",
-          "url": "https://www.drking.com.tw/product-23.html"
-        },
-        {
           "name": "曾㨗聖醫師",
           "url": "https://www.drking.com.tw/product-22.html"
+        },
+        {
+          "name": "陳佳舜醫師",
+          "url": "https://www.drking.com.tw/product-85.html"
         },
         {
           "name": "鍾偉瑋醫師",
@@ -141,6 +141,14 @@
         {
           "name": "廖崇淵醫師",
           "url": "https://www.drking.com.tw/product-81-5.html"
+        },
+        {
+          "name": "高國峯醫師",
+          "url": "https://www.drking.com.tw/product-23-5.html"
+        },
+        {
+          "name": "陳昭銘醫師",
+          "url": "https://www.drking.com.tw/product-69-5.html"
         }
       ]
     },
@@ -194,10 +202,6 @@
       "name": "八德院區",
       "src": "https://www.drking.com.tw/products-7.html",
       "doctors": [
-        {
-          "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-3.html"
-        },
         {
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-31.html"
@@ -263,10 +267,6 @@
           "url": "https://www.drking.com.tw/product-79.html"
         },
         {
-          "name": "巫清隆醫師",
-          "url": "https://www.drking.com.tw/product-71.html"
-        },
-        {
           "name": "呂瑩純醫師",
           "url": "https://www.drking.com.tw/product-70.html"
         },
@@ -315,6 +315,10 @@
           "url": "https://www.drking.com.tw/product-59.html"
         },
         {
+          "name": "高國峯醫師",
+          "url": "https://www.drking.com.tw/product-23-11.html"
+        },
+        {
           "name": "李彥輝醫師",
           "url": "https://www.drking.com.tw/product-30-11.html"
         },
@@ -325,6 +329,10 @@
         {
           "name": "廖崇淵醫師",
           "url": "https://www.drking.com.tw/product-20-4.html"
+        },
+        {
+          "name": "陳佳舜醫師",
+          "url": "https://www.drking.com.tw/product-84-11.html"
         }
       ]
     },
@@ -332,10 +340,6 @@
       "name": "平鎮院區",
       "src": "https://www.drking.com.tw/products-12.html",
       "doctors": [
-        {
-          "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-3.html"
-        },
         {
           "name": "減重名醫 蕭捷健醫師",
           "url": "https://www.drking.com.tw/product-9-12.html"
@@ -363,6 +367,10 @@
       "src": "https://www.drking.com.tw/products-13.html",
       "doctors": [
         {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-13.html"
+        },
+        {
           "name": "總院長 黃錦崧執行長",
           "url": "https://www.drking.com.tw/product-10-3.html"
         },
@@ -371,12 +379,12 @@
           "url": "https://www.drking.com.tw/product-29.html"
         },
         {
-          "name": "黃炯達院長",
-          "url": "https://www.drking.com.tw/product-42.html"
+          "name": "徐翊庭醫師",
+          "url": "https://www.drking.com.tw/product-83.html"
         },
         {
-          "name": "廖崑竹院長",
-          "url": "https://www.drking.com.tw/product-75.html"
+          "name": "黃炯達院長",
+          "url": "https://www.drking.com.tw/product-42.html"
         },
         {
           "name": "陳昭銘院長",
@@ -399,6 +407,10 @@
         {
           "name": "侯進坤醫師",
           "url": "https://www.drking.com.tw/product-73.html"
+        },
+        {
+          "name": "陳佳舜醫師",
+          "url": "https://www.drking.com.tw/product-84-14.html"
         }
       ]
     }
