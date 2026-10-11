@@ -43,7 +43,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 .hero .divider{width:56px;height:3px;background:var(--teal);border-radius:2px;margin:14px auto 12px;}
 .hero p{margin:0;color:var(--muted);font-size:13.5px;}
 
-.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;
   box-shadow:0 8px 26px rgba(120,100,60,.07);padding:15px 18px;margin-bottom:14px;}
 .panel-row{display:flex;align-items:flex-start;gap:14px;}
 .panel-label{flex:none;display:inline-flex;align-items:center;gap:6px;background:var(--chip);
@@ -63,11 +63,20 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 
 .clinic-box{background:var(--card);border:1px solid var(--line);border-radius:18px;
   box-shadow:0 6px 18px rgba(120,100,60,.06);padding:18px 18px 20px;margin-bottom:18px;}
-.clinic-head{display:flex;align-items:flex-end;gap:10px;margin-bottom:16px;}
+.clinic-head{display:flex;align-items:flex-end;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
 .clinic-title-wrap{display:inline-flex;align-items:center;gap:9px;padding-bottom:8px;border-bottom:2.5px solid var(--teal);color:var(--teal);}
 .clinic-title-wrap svg{width:22px;height:22px;flex:none;}
 .clinic-title{font-size:18px;font-weight:700;color:#33473e;}
 .clinic-count{font-size:12px;color:var(--muted);background:#eef5f2;border-radius:999px;padding:2px 10px;margin-bottom:9px;}
+.clinic-title-wrap{cursor:pointer;}
+.clinic-title-wrap:hover .clinic-title{color:var(--teal-dark);}
+.clinic-title-wrap .go{font-size:16px;color:var(--teal);margin-left:2px;}
+.go-btn{margin-left:auto;margin-bottom:6px;background:var(--teal);color:#fff;border:none;border-radius:999px;
+  padding:10px 20px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;
+  box-shadow:0 5px 14px rgba(47,145,131,.28);transition:all .15s;}
+.go-btn:hover{background:var(--teal-dark);transform:translateY(-1px);}
+.doc-name{border:1px solid #e6dfcf;background:#faf8f2;color:#5b6862;border-radius:999px;
+  padding:8px 16px;font-size:14.5px;font-weight:600;cursor:default;}
 .doc-grid{display:flex;flex-wrap:wrap;gap:10px;}
 .doc-btn{border:1px solid #ddd2bd;background:#fff;color:#5b6862;border-radius:999px;
   padding:9px 18px;font-size:15px;cursor:pointer;transition:all .15s;font-weight:600;}
@@ -149,6 +158,32 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   .doc-btn{font-size:14px;padding:8px 15px;}
   .clinic-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
   .clinic-btn{padding:22px 10px;font-size:17px;}
+  .go-btn{padding:9px 15px;font-size:13.5px;}
+}
+
+/* ===== 院區卡片（整張可點） ===== */
+.clinic-box.clinic-link{padding:0;cursor:pointer;overflow:hidden;transition:transform .15s,box-shadow .15s,border-color .15s;}
+.clinic-link:hover,.clinic-link:focus-visible{border-color:#9fd0c6;box-shadow:0 12px 28px rgba(47,145,131,.16);transform:translateY(-2px);outline:none;}
+.cl-head{display:flex;align-items:center;gap:14px;padding:18px 20px;}
+.cl-pin{width:46px;height:46px;border-radius:14px;background:#eef6f3;color:var(--teal);display:flex;align-items:center;justify-content:center;flex:none;}
+.cl-pin svg{width:23px;height:23px;}
+.cl-txt{min-width:0;}
+.cl-name{font-size:19px;font-weight:700;color:#2f4a40;letter-spacing:1px;}
+.cl-sub{font-size:12.5px;color:var(--muted);margin-top:3px;}
+.cl-go{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:3px;color:var(--teal-dark);font-weight:700;font-size:14.5px;
+  background:#eef6f3;border-radius:999px;padding:9px 12px 9px 17px;transition:background .15s,color .15s;}
+.cl-go svg{width:17px;height:17px;transition:transform .15s;}
+.clinic-link:hover .cl-go,.clinic-link:focus-visible .cl-go{background:var(--teal);color:#fff;}
+.clinic-link:hover .cl-go svg{transform:translateX(3px);}
+.cl-docs{display:flex;flex-wrap:wrap;gap:8px;border-top:1px dashed #ece3d2;padding:15px 20px 18px;}
+.cl-doc{white-space:nowrap;background:#faf8f2;border:1px solid #ebe4d4;color:#5b6862;border-radius:999px;padding:7px 15px;font-size:14px;font-weight:600;}
+@media (max-width:600px){
+  .cl-head{padding:15px 15px;gap:11px;}
+  .cl-pin{width:40px;height:40px;border-radius:12px;}
+  .cl-name{font-size:17px;}
+  .cl-go{font-size:13px;padding:8px 9px 8px 13px;}
+  .cl-docs{padding:12px 15px 15px;gap:7px;}
+  .cl-doc{font-size:13px;padding:6px 12px;}
 }
 </style>
 </head>
@@ -167,7 +202,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
     <h1>金鶯診所醫療團隊</h1>
     <div class="eyebrow">MEDICAL TEAM</div>
     <div class="divider"></div>
-    <p>點選院區，查看該院區醫療團隊與醫師班表</p>
+    <p>點選院區卡片，查看該院區醫療團隊與班表</p>
   </div>
 
   <div class="panel">
@@ -186,8 +221,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 
   <div class="footer">
     <div class="ft-title">金鶯診所 · 全年無休</div>
-    <div>鶯歌／三樹／樹林／桃園／土城／八德／龍潭／大溪院區　7:30–21:30</div>
-    <div>大竹／大湳／平鎮／埔心／觀音院區　7:30–12:00、14:00–18:00、18:30–21:30</div>
+    <div>鶯歌／三樹／樹林／桃園／土城／八德／龍潭／大溪／大湳院區　7:30–21:30</div>
+    <div>大竹／平鎮／埔心／觀音／龍岡院區　7:30–12:00、14:00–18:00、18:30–21:30</div>
     <div>資料來源：<a href="https://www.drking.com.tw/" target="_blank" rel="noopener">drking.com.tw</a></div>
   </div>
 </div>
@@ -673,31 +708,24 @@ function openDoctor(d){
   window.open(u, "_blank", "noopener");
 }
 function clinicBox(c){
-  const box=document.createElement("div"); box.className="clinic-box";
-  const head=document.createElement("div"); head.className="clinic-head";
-  head.innerHTML='<span class="clinic-title-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg><span class="clinic-title">'+escHtml(c.name)+'</span></span><span class="clinic-count">'+c.doctors.length+' 位</span>';
-  box.appendChild(head);
-  const grid=document.createElement("div"); grid.className="doc-grid";
-  c.doctors.forEach(d=>{
-    const btn=document.createElement("button");
-    btn.className="doc-btn"+((d.url&&d.url.trim())?"":" unset");
-    btn.textContent=d.name;
-    btn.onclick=()=>openDoctor(d);
-    grid.appendChild(btn);
-  });
-  box.appendChild(grid);
+  const box=document.createElement("div"); box.className="clinic-box clinic-link";
+  const go=()=>{ const u=(c.url||c.src||"").trim(); if(!u){ toast("此院區尚未設定連結"); return; } window.open(u,"_blank","noopener"); };
+  box.onclick=go; box.tabIndex=0; box.setAttribute("role","link");
+  box.onkeydown=e=>{ if(e.key==="Enter") go(); };
+  const docs=c.doctors.map(d=>'<span class="cl-doc">'+escHtml(d.name)+'</span>').join("");
+  box.innerHTML=
+    '<div class="cl-head">'+
+      '<span class="cl-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg></span>'+
+      '<div class="cl-txt"><div class="cl-name">'+escHtml(c.name)+'</div><div class="cl-sub">'+c.doctors.length+' 位醫師</div></div>'+
+      '<span class="cl-go">查看院區<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>'+
+    '</div>'+
+    (docs?'<div class="cl-docs">'+docs+'</div>':'');
   return box;
 }
 function renderContent(){
   const wrap=document.getElementById("content"); wrap.innerHTML="";
-  const grid=document.createElement("div"); grid.className="clinic-grid";
-  CONFIG.clinics.forEach(c=>{
-    const btn=document.createElement("button"); btn.className="clinic-btn";
-    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg><span>'+escHtml(c.name)+'</span>';
-    btn.onclick=()=>{ const u=(c.url||c.src||"").trim(); if(!u){ toast("此院區尚未設定連結"); return; } window.open(u,"_blank","noopener"); };
-    grid.appendChild(btn);
-  });
-  wrap.appendChild(grid);
+  const list=current==="all"?CONFIG.clinics:[CONFIG.clinics[current]];
+  list.forEach(c=>{ if(c) wrap.appendChild(clinicBox(c)); });
 }
 function renderFront(){ renderCapsules(); renderContent(); updateCapScroll(); setTimeout(updateCapScroll,250); }
 function updateCapScroll(){
