@@ -1,5 +1,5 @@
 {
-  "configVersion": 5,
+  "configVersion": 1791709027867,
   "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
@@ -418,6 +418,12 @@
         }
       ],
       "url": "https://www.drking.com.tw/products-14.html"
+    },
+    {
+      "name": "龍岡院區",
+      "src": "https://www.drking.com.tw/products-15.html",
+      "doctors": [],
+      "url": "https://www.drking.com.tw/products-15.html"
     }
   ]
 }
