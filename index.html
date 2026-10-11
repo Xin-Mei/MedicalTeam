@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>金鶯診所 - 醫師個人班表</title>
+<title>金鶯診所醫療團隊</title>
 <style>
 :root{
   color-scheme: light;
@@ -43,7 +43,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 .hero .divider{width:56px;height:3px;background:var(--teal);border-radius:2px;margin:14px auto 12px;}
 .hero p{margin:0;color:var(--muted);font-size:13.5px;}
 
-.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;
+.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;
   box-shadow:0 8px 26px rgba(120,100,60,.07);padding:15px 18px;margin-bottom:14px;}
 .panel-row{display:flex;align-items:flex-start;gap:14px;}
 .panel-label{flex:none;display:inline-flex;align-items:center;gap:6px;background:var(--chip);
@@ -74,6 +74,14 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
 .doc-btn:hover{border-color:#79bdb0;color:var(--teal-dark);background:#fff;}
 .doc-btn.unset{border-style:dashed;border-color:#dcd8cd;color:#aeb6af;background:#faf9f5;}
 .doc-btn.unset:hover{border-color:#dcd8cd;color:#aeb6af;}
+
+/* 院區按鈕(前台僅顯示院區) */
+.clinic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;}
+.clinic-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;
+  border:1.5px solid #cfe3dc;border-radius:18px;padding:28px 14px;font-size:19px;font-weight:700;
+  color:#2f4a40;cursor:pointer;box-shadow:0 6px 18px rgba(120,100,60,.06);transition:all .15s;font-family:inherit;}
+.clinic-btn svg{width:22px;height:22px;color:var(--teal);flex:none;}
+.clinic-btn:hover{border-color:#79bdb0;color:var(--teal-dark);box-shadow:0 10px 24px rgba(121,189,176,.28);transform:translateY(-2px);}
 
 .footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:30px;line-height:1.9;}
 .footer .ft-title{color:var(--green);font-weight:700;font-size:13.5px;margin-bottom:4px;}
@@ -139,6 +147,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   .clinic-box{padding:16px 14px 18px;}
   .doc-grid{gap:8px;}
   .doc-btn{font-size:14px;padding:8px 15px;}
+  .clinic-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .clinic-btn{padding:22px 10px;font-size:17px;}
 }
 </style>
 </head>
@@ -154,10 +164,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   </div>
 
   <div class="hero">
-    <h1>醫師個人班表</h1>
-    <div class="eyebrow">DOCTOR SCHEDULE</div>
+    <h1>金鶯診所醫療團隊</h1>
+    <div class="eyebrow">MEDICAL TEAM</div>
     <div class="divider"></div>
-    <p>點選院區可篩選；點選醫師查看醫師個人簡介與班表</p>
+    <p>點選院區，查看該院區醫療團隊與醫師班表</p>
   </div>
 
   <div class="panel">
@@ -205,7 +215,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
    url 留空 = 前台顯示為灰色未啟用按鈕
    ========================================================= */
 const DEFAULT_CONFIG = /*CFG_START*/{
-  "configVersion": 4,
+  "configVersion": 5,
   "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
@@ -234,7 +244,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "陳郁凡醫師",
           "url": "https://www.drking.com.tw/product-4-2.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-2.html"
     },
     {
       "name": "三樹院區",
@@ -280,7 +291,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "陳郁凡醫師",
           "url": "https://www.drking.com.tw/product-4-3.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-3.html"
     },
     {
       "name": "樹林院區",
@@ -314,7 +326,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "黃炯達院長",
           "url": "https://www.drking.com.tw/product-67.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-4.html"
     },
     {
       "name": "桃園院區",
@@ -348,7 +361,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-76.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-5.html"
     },
     {
       "name": "土城院區",
@@ -394,7 +408,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "何中誠醫師",
           "url": "https://www.drking.com.tw/product-18-6.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-6.html"
     },
     {
       "name": "八德院區",
@@ -432,7 +447,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "黃炯達院長",
           "url": "https://www.drking.com.tw/product-66.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-7.html"
     },
     {
       "name": "龍潭院區",
@@ -458,7 +474,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "陳昭銘院長",
           "url": "https://www.drking.com.tw/product-34.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-8.html"
     },
     {
       "name": "大溪院區",
@@ -488,7 +505,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "李逸瑋院長",
           "url": "https://www.drking.com.tw/product-78.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-9.html"
     },
     {
       "name": "大竹院區",
@@ -510,7 +528,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "李軍逸醫師",
           "url": "https://www.drking.com.tw/product-5-10.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-10.html"
     },
     {
       "name": "大湳院區",
@@ -536,7 +555,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "廖崇淵醫師",
           "url": "https://www.drking.com.tw/product-20-4.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-11.html"
     },
     {
       "name": "平鎮院區",
@@ -566,7 +586,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-31.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-12.html"
     },
     {
       "name": "埔心院區",
@@ -592,7 +613,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "陳昭銘院長",
           "url": "https://www.drking.com.tw/product-69.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-13.html"
     },
     {
       "name": "觀音院區",
@@ -610,7 +632,8 @@ const DEFAULT_CONFIG = /*CFG_START*/{
           "name": "侯進坤醫師",
           "url": "https://www.drking.com.tw/product-73.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-14.html"
     }
   ]
 }/*CFG_END*/;
@@ -667,8 +690,14 @@ function clinicBox(c){
 }
 function renderContent(){
   const wrap=document.getElementById("content"); wrap.innerHTML="";
-  const list=current==="all"?CONFIG.clinics:[CONFIG.clinics[current]];
-  list.forEach(c=>{ if(c) wrap.appendChild(clinicBox(c)); });
+  const grid=document.createElement("div"); grid.className="clinic-grid";
+  CONFIG.clinics.forEach(c=>{
+    const btn=document.createElement("button"); btn.className="clinic-btn";
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg><span>'+escHtml(c.name)+'</span>';
+    btn.onclick=()=>{ const u=(c.url||c.src||"").trim(); if(!u){ toast("此院區尚未設定連結"); return; } window.open(u,"_blank","noopener"); };
+    grid.appendChild(btn);
+  });
+  wrap.appendChild(grid);
 }
 function renderFront(){ renderCapsules(); renderContent(); updateCapScroll(); setTimeout(updateCapScroll,250); }
 function updateCapScroll(){
@@ -862,6 +891,11 @@ function renderAdmin(){
     srcRow.innerHTML='<span>官網分頁(同步用)</span><input value="'+escAttr(c.src||"")+'" placeholder="https://www.drking.com.tw/products-N.html">';
     srcRow.querySelector("input").oninput=e=>{ c.src=e.target.value; saveDraft(); };
     rows.appendChild(srcRow);
+
+    const urlRow=document.createElement("div"); urlRow.className="adm-src";
+    urlRow.innerHTML='<span>院區按鈕連結</span><input value="'+escAttr(c.url||"")+'" placeholder="點擊院區後前往的網址（留空＝官網分頁）">';
+    urlRow.querySelector("input").oninput=e=>{ c.url=e.target.value; saveDraft(); };
+    rows.appendChild(urlRow);
 
     c.doctors.forEach((d,di)=>{
       const r=document.createElement("div"); r.className="adm-row";

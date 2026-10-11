@@ -1,5 +1,5 @@
 {
-  "configVersion": 1790698300483,
+  "configVersion": 5,
   "adminPass": "ab2670ab",
   "autoSync": false,
   "proxy": "https://api.allorigins.win/raw?url=",
@@ -28,7 +28,8 @@
           "name": "陳郁凡醫師",
           "url": "https://www.drking.com.tw/product-4-2.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-2.html"
     },
     {
       "name": "三樹院區",
@@ -63,8 +64,8 @@
           "url": "https://www.drking.com.tw/product-13.html"
         },
         {
-          "name": "鍾偉瑋醫師",
-          "url": "https://www.drking.com.tw/product-6-3.html"
+          "name": "張覲麟醫師",
+          "url": "https://www.drking.com.tw/product-12.html"
         },
         {
           "name": "李軍逸醫師",
@@ -74,7 +75,8 @@
           "name": "陳郁凡醫師",
           "url": "https://www.drking.com.tw/product-4-3.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-3.html"
     },
     {
       "name": "樹林院區",
@@ -108,7 +110,8 @@
           "name": "黃炯達院長",
           "url": "https://www.drking.com.tw/product-67.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-4.html"
     },
     {
       "name": "桃園院區",
@@ -127,30 +130,23 @@
           "url": "https://www.drking.com.tw/product-24.html"
         },
         {
-          "name": "曾㨗聖醫師",
-          "url": "https://www.drking.com.tw/product-22.html"
+          "name": "陳韋思醫師",
+          "url": "https://www.drking.com.tw/product-23.html"
         },
         {
-          "name": "陳佳舜醫師",
-          "url": "https://www.drking.com.tw/product-85.html"
+          "name": "曾㨗聖醫師",
+          "url": "https://www.drking.com.tw/product-22.html"
         },
         {
           "name": "鍾偉瑋醫師",
           "url": "https://www.drking.com.tw/product-6-5.html"
         },
         {
-          "name": "廖崇淵醫師",
-          "url": "https://www.drking.com.tw/product-81-5.html"
-        },
-        {
-          "name": "高國峯醫師",
-          "url": "https://www.drking.com.tw/product-23-5.html"
-        },
-        {
-          "name": "陳昭銘院長",
-          "url": "https://www.drking.com.tw/product-69-5.html"
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-76.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-5.html"
     },
     {
       "name": "土城院區",
@@ -196,12 +192,21 @@
           "name": "何中誠醫師",
           "url": "https://www.drking.com.tw/product-18-6.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-6.html"
     },
     {
       "name": "八德院區",
       "src": "https://www.drking.com.tw/products-7.html",
       "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-3.html"
+        },
+        {
+          "name": "總院長 黃錦崧執行長",
+          "url": "https://www.drking.com.tw/product-10-3.html"
+        },
         {
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-31.html"
@@ -226,7 +231,8 @@
           "name": "黃炯達院長",
           "url": "https://www.drking.com.tw/product-66.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-7.html"
     },
     {
       "name": "龍潭院區",
@@ -245,14 +251,15 @@
           "url": "https://www.drking.com.tw/product-32.html"
         },
         {
-          "name": "陳昭銘院長",
-          "url": "https://www.drking.com.tw/product-34.html"
+          "name": "林昱仁醫師",
+          "url": "https://www.drking.com.tw/product-51.html"
         },
         {
-          "name": "廖崑竹院長",
-          "url": "https://www.drking.com.tw/product-82.html"
+          "name": "陳昭銘院長",
+          "url": "https://www.drking.com.tw/product-34.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-8.html"
     },
     {
       "name": "大溪院區",
@@ -263,6 +270,10 @@
           "url": "https://www.drking.com.tw/product-39.html"
         },
         {
+          "name": "林昆澤醫師",
+          "url": "https://www.drking.com.tw/product-79.html"
+        },
+        {
           "name": "巫清隆醫師",
           "url": "https://www.drking.com.tw/product-71.html"
         },
@@ -271,22 +282,15 @@
           "url": "https://www.drking.com.tw/product-70.html"
         },
         {
-          "name": "謝騰緯醫師",
-          "url": "https://www.drking.com.tw/product-87.html"
-        },
-        {
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-74.html"
         },
         {
           "name": "李逸瑋院長",
           "url": "https://www.drking.com.tw/product-78.html"
-        },
-        {
-          "name": "林昆澤醫師",
-          "url": "https://www.drking.com.tw/product-79.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-9.html"
     },
     {
       "name": "大竹院區",
@@ -308,7 +312,8 @@
           "name": "李軍逸醫師",
           "url": "https://www.drking.com.tw/product-5-10.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-10.html"
     },
     {
       "name": "大湳院區",
@@ -323,10 +328,6 @@
           "url": "https://www.drking.com.tw/product-59.html"
         },
         {
-          "name": "高國峯醫師",
-          "url": "https://www.drking.com.tw/product-23-11.html"
-        },
-        {
           "name": "李彥輝醫師",
           "url": "https://www.drking.com.tw/product-30-11.html"
         },
@@ -337,17 +338,18 @@
         {
           "name": "廖崇淵醫師",
           "url": "https://www.drking.com.tw/product-20-4.html"
-        },
-        {
-          "name": "陳佳舜醫師",
-          "url": "https://www.drking.com.tw/product-84-11.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-11.html"
     },
     {
       "name": "平鎮院區",
       "src": "https://www.drking.com.tw/products-12.html",
       "doctors": [
+        {
+          "name": "總院長 蕭捷存執行長",
+          "url": "https://www.drking.com.tw/product-11-3.html"
+        },
         {
           "name": "減重名醫 蕭捷健醫師",
           "url": "https://www.drking.com.tw/product-9-12.html"
@@ -368,33 +370,39 @@
           "name": "廖崑竹院長",
           "url": "https://www.drking.com.tw/product-31.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-12.html"
     },
     {
       "name": "埔心院區",
       "src": "https://www.drking.com.tw/products-13.html",
       "doctors": [
         {
-          "name": "梁培毅院長",
-          "url": "https://www.drking.com.tw/product-29.html"
+          "name": "總院長 黃錦崧執行長",
+          "url": "https://www.drking.com.tw/product-10-3.html"
         },
         {
-          "name": "徐翊庭醫師",
-          "url": "https://www.drking.com.tw/product-83.html"
+          "name": "梁培毅院長",
+          "url": "https://www.drking.com.tw/product-29.html"
         },
         {
           "name": "黃炯達院長",
           "url": "https://www.drking.com.tw/product-42.html"
         },
         {
+          "name": "廖崑竹院長",
+          "url": "https://www.drking.com.tw/product-75.html"
+        },
+        {
           "name": "陳昭銘院長",
           "url": "https://www.drking.com.tw/product-69.html"
         }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-13.html"
     },
     {
       "name": "觀音院區",
-      "src": "https://www.drking.com.tw/products-15.html",
+      "src": "https://www.drking.com.tw/products-14.html",
       "doctors": [
         {
           "name": "李逸瑋院長",
@@ -402,47 +410,14 @@
         },
         {
           "name": "林鼎盛院長",
-          "url": "https://www.drking.com.tw/product-77-14.html"
+          "url": "https://www.drking.com.tw/product-77.html"
         },
         {
           "name": "侯進坤醫師",
           "url": "https://www.drking.com.tw/product-73.html"
-        },
-        {
-          "name": "陳佳舜醫師",
-          "url": "https://www.drking.com.tw/product-84-14.html"
         }
-      ]
-    },
-    {
-      "name": "龍岡院區",
-      "src": "",
-      "doctors": [
-        {
-          "name": "總院長 蕭捷存執行長",
-          "url": "https://www.drking.com.tw/product-11-15.html"
-        },
-        {
-          "name": "總院長 黃錦崧執行長",
-          "url": "https://www.drking.com.tw/product-10-15.html"
-        },
-        {
-          "name": "林昆澤院長",
-          "url": "https://www.drking.com.tw/product-79.html"
-        },
-        {
-          "name": "林鼎盛院長",
-          "url": "https://www.drking.com.tw/product-77-15.html"
-        },
-        {
-          "name": "黃炯達院長",
-          "url": "https://www.drking.com.tw/product-42-15.html"
-        },
-        {
-          "name": "徐翊庭醫師",
-          "url": "https://www.drking.com.tw/product-86.html"
-        }
-      ]
+      ],
+      "url": "https://www.drking.com.tw/products-14.html"
     }
   ]
 }
