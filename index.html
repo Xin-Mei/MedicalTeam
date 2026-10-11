@@ -185,6 +185,23 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
   .cl-docs{padding:12px 15px 15px;gap:7px;}
   .cl-doc{font-size:13px;padding:6px 12px;}
 }
+
+/* ===== 定位區塊 ===== */
+.locbar{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 26px rgba(120,100,60,.07);
+  padding:18px 20px;margin-bottom:14px;text-align:center;}
+.loc-text{font-size:14px;color:#5b6862;line-height:1.7;}
+.loc-text b{color:var(--teal-dark);}
+.loc-actions{margin-top:12px;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;}
+.loc-btn{display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;border-radius:12px;
+  padding:10px 20px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 5px 14px rgba(47,145,131,.25);}
+.loc-btn svg{width:17px;height:17px;}
+.loc-btn:hover{background:var(--teal-dark);}
+.loc-reset{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline;font-family:inherit;}
+.cl-near{display:inline-block;margin-left:8px;vertical-align:2px;font-size:11.5px;font-weight:700;letter-spacing:0;color:#fff;
+  background:#e0915a;border-radius:999px;padding:2px 9px;}
+.cl-dist{margin-left:8px;padding-left:8px;border-left:1px solid #e3dccb;color:var(--teal-dark);font-weight:600;}
+.clinic-link.is-near{border-color:#9fd0c6;box-shadow:0 10px 26px rgba(47,145,131,.18);}
+@media (max-width:600px){ .locbar{padding:15px 14px;} .loc-text{font-size:13px;} }
 </style>
 </head>
 <body>
@@ -205,6 +222,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang 
     <p>點選院區卡片，查看該院區醫療團隊與班表</p>
   </div>
 
+  <div class="locbar" id="locbar">
+    <div class="loc-text" id="locText">想知道哪間院區離您最近嗎？開啟定位即可依距離排序</div>
+    <div class="loc-actions">
+      <button class="loc-btn" id="locBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg><span id="locBtnTxt">開啟定位</span></button>
+      <button class="loc-reset" id="locReset" style="display:none">取消排序</button>
+    </div>
+  </div>
   <div class="panel">
     <div class="panel-row">
       <span class="panel-label">🏥 瀏覽</span>
@@ -707,16 +731,18 @@ function openDoctor(d){
   if(!u){ toast("此醫師尚未設定連結"); return; }
   window.open(u, "_blank", "noopener");
 }
-function clinicBox(c){
+function clinicBox(c,isNearest){
   const box=document.createElement("div"); box.className="clinic-box clinic-link";
   const go=()=>{ const u=(c.url||c.src||"").trim(); if(!u){ toast("此院區尚未設定連結"); return; } window.open(u,"_blank","noopener"); };
   box.onclick=go; box.tabIndex=0; box.setAttribute("role","link");
   box.onkeydown=e=>{ if(e.key==="Enter") go(); };
   const docs=c.doctors.map(d=>'<span class="cl-doc">'+escHtml(d.name)+'</span>').join("");
+  const dk=clinicDist(c);
+  if(isNearest) box.classList.add("is-near");
   box.innerHTML=
     '<div class="cl-head">'+
       '<span class="cl-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10.5c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg></span>'+
-      '<div class="cl-txt"><div class="cl-name">'+escHtml(c.name)+'</div><div class="cl-sub">'+c.doctors.length+' 位醫師</div></div>'+
+      '<div class="cl-txt"><div class="cl-name">'+escHtml(c.name)+(isNearest?'<span class="cl-near">離您最近</span>':'')+'</div><div class="cl-sub">'+c.doctors.length+' 位醫師'+(dk!=null?'<span class="cl-dist">距離約 '+fmtKm(dk)+'</span>':'')+'</div></div>'+
       '<span class="cl-go">查看院區<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>'+
     '</div>'+
     (docs?'<div class="cl-docs">'+docs+'</div>':'');
@@ -724,9 +750,59 @@ function clinicBox(c){
 }
 function renderContent(){
   const wrap=document.getElementById("content"); wrap.innerHTML="";
-  const list=current==="all"?CONFIG.clinics:[CONFIG.clinics[current]];
-  list.forEach(c=>{ if(c) wrap.appendChild(clinicBox(c)); });
+  let list=current==="all"?CONFIG.clinics.slice():[CONFIG.clinics[current]];
+  const sorted=!!userPos && current==="all";
+  if(sorted) list.sort((a,b)=>{ const da=clinicDist(a), db=clinicDist(b); return (da==null?1e9:da)-(db==null?1e9:db); });
+  list.forEach((c,i)=>{ if(c) wrap.appendChild(clinicBox(c, sorted && i===0 && clinicDist(c)!=null)); });
 }
+
+/* ---------- 定位：依距離排序院區 ---------- */
+// 依官網地址估算之座標（可於後台各院區「座標」欄位校正）
+const COORDS={
+  "鶯歌院區":[24.9553,121.3510], "三樹院區":[24.9530,121.3870], "樹林院區":[24.9895,121.4227],
+  "桃園院區":[24.9890,121.3240], "土城院區":[24.9770,121.4470], "八德院區":[24.9420,121.2940],
+  "龍潭院區":[24.8690,121.2150], "大溪院區":[24.8790,121.2870], "大竹院區":[25.0170,121.2890],
+  "大湳院區":[24.9630,121.2960], "平鎮院區":[24.8930,121.2190], "埔心院區":[24.9220,121.1840],
+  "觀音院區":[25.0340,121.0810], "龍岡院區":[24.9080,121.2390]
+};
+let userPos=null;
+function clinicLL(c){
+  if(c.coord){ const p=String(c.coord).split(/[,，\s]+/).map(Number); if(p.length>=2 && !isNaN(p[0]) && !isNaN(p[1])) return [p[0],p[1]]; }
+  return COORDS[c.name]||null;
+}
+function distKm(a,b){
+  const R=6371, r=x=>x*Math.PI/180;
+  const dLat=r(b[0]-a[0]), dLng=r(b[1]-a[1]);
+  const s=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(r(a[0]))*Math.cos(r(b[0]))*Math.sin(dLng/2)*Math.sin(dLng/2);
+  return 2*R*Math.asin(Math.sqrt(s));
+}
+function clinicDist(c){ if(!userPos) return null; const ll=clinicLL(c); return ll?distKm(userPos,ll):null; }
+function fmtKm(d){ return d<1 ? Math.round(d*1000)+" 公尺" : d.toFixed(1)+" 公里"; }
+function locateMe(){
+  const t=document.getElementById("locText"), bt=document.getElementById("locBtnTxt");
+  if(!navigator.geolocation){ t.textContent="此瀏覽器不支援定位功能"; return; }
+  bt.textContent="定位中…";
+  navigator.geolocation.getCurrentPosition(p=>{
+    userPos=[p.coords.latitude,p.coords.longitude];
+    current="all"; renderFront();
+    let best=null, bd=1e9;
+    CONFIG.clinics.forEach(c=>{ const d=clinicDist(c); if(d!=null && d<bd){ bd=d; best=c; } });
+    t.innerHTML=best ? "已依距離由近到遠排序，離您最近的是 <b>"+escHtml(best.name)+"</b>（約 "+fmtKm(bd)+"）" : "已取得定位";
+    bt.textContent="重新定位";
+    document.getElementById("locReset").style.display="inline-block";
+    document.getElementById("content").scrollIntoView({behavior:"smooth",block:"start"});
+  }, err=>{
+    bt.textContent="開啟定位";
+    t.textContent= err.code===1 ? "您未允許定位，請至瀏覽器或手機設定開啟定位權限後再試" : "暫時無法取得定位，請稍後再試";
+  }, {enableHighAccuracy:false, timeout:12000, maximumAge:300000});
+}
+document.getElementById("locBtn").onclick=locateMe;
+document.getElementById("locReset").onclick=()=>{
+  userPos=null; renderFront();
+  document.getElementById("locText").textContent="想知道哪間院區離您最近嗎？開啟定位即可依距離排序";
+  document.getElementById("locBtnTxt").textContent="開啟定位";
+  document.getElementById("locReset").style.display="none";
+};
 function renderFront(){ renderCapsules(); renderContent(); updateCapScroll(); setTimeout(updateCapScroll,250); }
 function updateCapScroll(){
   const cap=document.getElementById("capsules");
@@ -924,6 +1000,12 @@ function renderAdmin(){
     urlRow.innerHTML='<span>院區按鈕連結</span><input value="'+escAttr(c.url||"")+'" placeholder="點擊院區後前往的網址（留空＝官網分頁）">';
     urlRow.querySelector("input").oninput=e=>{ c.url=e.target.value; saveDraft(); };
     rows.appendChild(urlRow);
+
+    const coRow=document.createElement("div"); coRow.className="adm-src";
+    const defLL=COORDS[c.name];
+    coRow.innerHTML='<span>座標(定位用)</span><input value="'+escAttr(c.coord||"")+'" placeholder="緯度,經度　'+(defLL?('目前預設 '+defLL[0]+','+defLL[1]):'例：24.9553,121.3510')+'">';
+    coRow.querySelector("input").oninput=e=>{ c.coord=e.target.value; saveDraft(); };
+    rows.appendChild(coRow);
 
     c.doctors.forEach((d,di)=>{
       const r=document.createElement("div"); r.className="adm-row";
